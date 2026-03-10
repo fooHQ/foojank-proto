@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "packages": [
+    "capnproto@latest",
+    "capnproto-java@latest",
+    "capnproto-rust@latest",
+    "go@1.25"
+  ],
+  "shell": {
+    "init_hook": [
+      "echo 'Welcome to devbox!' > /dev/null"
+    ],
+    "scripts": {
+      "install": [
+        "./devbox.sh install"
+      ],
+      "build": [
+        "./devbox.sh build"
+      ]
+    }
+  }
+}
