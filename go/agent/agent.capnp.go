@@ -711,12 +711,12 @@ func (w Message_content_Which) String() string {
 const Message_TypeID = 0xd270ea7f372f79cd
 
 func NewMessage(s *capnp.Segment) (Message, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 1})
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 3})
 	return Message(st), err
 }
 
 func NewRootMessage(s *capnp.Segment) (Message, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 1})
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 3})
 	return Message(st), err
 }
 
@@ -752,6 +752,42 @@ func (s Message) Message() *capnp.Message {
 func (s Message) Segment() *capnp.Segment {
 	return capnp.Struct(s).Segment()
 }
+func (s Message) MsgId() (string, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.Text(), err
+}
+
+func (s Message) HasMsgId() bool {
+	return capnp.Struct(s).HasPtr(0)
+}
+
+func (s Message) MsgIdBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(0)
+	return p.TextBytes(), err
+}
+
+func (s Message) SetMsgId(v string) error {
+	return capnp.Struct(s).SetText(0, v)
+}
+
+func (s Message) CorrelationId() (string, error) {
+	p, err := capnp.Struct(s).Ptr(1)
+	return p.Text(), err
+}
+
+func (s Message) HasCorrelationId() bool {
+	return capnp.Struct(s).HasPtr(1)
+}
+
+func (s Message) CorrelationIdBytes() ([]byte, error) {
+	p, err := capnp.Struct(s).Ptr(1)
+	return p.TextBytes(), err
+}
+
+func (s Message) SetCorrelationId(v string) error {
+	return capnp.Struct(s).SetText(1, v)
+}
+
 func (s Message) Content() Message_content { return Message_content(s) }
 
 func (s Message_content) Which() Message_content_Which {
@@ -772,7 +808,7 @@ func (s Message_content) StartWorkerRequest() (StartWorkerRequest, error) {
 	if capnp.Struct(s).Uint16(0) != 0 {
 		panic("Which() != startWorkerRequest")
 	}
-	p, err := capnp.Struct(s).Ptr(0)
+	p, err := capnp.Struct(s).Ptr(2)
 	return StartWorkerRequest(p.Struct()), err
 }
 
@@ -780,12 +816,12 @@ func (s Message_content) HasStartWorkerRequest() bool {
 	if capnp.Struct(s).Uint16(0) != 0 {
 		return false
 	}
-	return capnp.Struct(s).HasPtr(0)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Message_content) SetStartWorkerRequest(v StartWorkerRequest) error {
 	capnp.Struct(s).SetUint16(0, 0)
-	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+	return capnp.Struct(s).SetPtr(2, capnp.Struct(v).ToPtr())
 }
 
 // NewStartWorkerRequest sets the startWorkerRequest field to a newly
@@ -796,7 +832,7 @@ func (s Message_content) NewStartWorkerRequest() (StartWorkerRequest, error) {
 	if err != nil {
 		return StartWorkerRequest{}, err
 	}
-	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	err = capnp.Struct(s).SetPtr(2, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
@@ -804,7 +840,7 @@ func (s Message_content) StartWorkerResponse() (StartWorkerResponse, error) {
 	if capnp.Struct(s).Uint16(0) != 1 {
 		panic("Which() != startWorkerResponse")
 	}
-	p, err := capnp.Struct(s).Ptr(0)
+	p, err := capnp.Struct(s).Ptr(2)
 	return StartWorkerResponse(p.Struct()), err
 }
 
@@ -812,12 +848,12 @@ func (s Message_content) HasStartWorkerResponse() bool {
 	if capnp.Struct(s).Uint16(0) != 1 {
 		return false
 	}
-	return capnp.Struct(s).HasPtr(0)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Message_content) SetStartWorkerResponse(v StartWorkerResponse) error {
 	capnp.Struct(s).SetUint16(0, 1)
-	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+	return capnp.Struct(s).SetPtr(2, capnp.Struct(v).ToPtr())
 }
 
 // NewStartWorkerResponse sets the startWorkerResponse field to a newly
@@ -828,7 +864,7 @@ func (s Message_content) NewStartWorkerResponse() (StartWorkerResponse, error) {
 	if err != nil {
 		return StartWorkerResponse{}, err
 	}
-	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	err = capnp.Struct(s).SetPtr(2, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
@@ -836,7 +872,7 @@ func (s Message_content) StopWorkerRequest() (StopWorkerRequest, error) {
 	if capnp.Struct(s).Uint16(0) != 2 {
 		panic("Which() != stopWorkerRequest")
 	}
-	p, err := capnp.Struct(s).Ptr(0)
+	p, err := capnp.Struct(s).Ptr(2)
 	return StopWorkerRequest(p.Struct()), err
 }
 
@@ -844,12 +880,12 @@ func (s Message_content) HasStopWorkerRequest() bool {
 	if capnp.Struct(s).Uint16(0) != 2 {
 		return false
 	}
-	return capnp.Struct(s).HasPtr(0)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Message_content) SetStopWorkerRequest(v StopWorkerRequest) error {
 	capnp.Struct(s).SetUint16(0, 2)
-	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+	return capnp.Struct(s).SetPtr(2, capnp.Struct(v).ToPtr())
 }
 
 // NewStopWorkerRequest sets the stopWorkerRequest field to a newly
@@ -860,7 +896,7 @@ func (s Message_content) NewStopWorkerRequest() (StopWorkerRequest, error) {
 	if err != nil {
 		return StopWorkerRequest{}, err
 	}
-	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	err = capnp.Struct(s).SetPtr(2, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
@@ -868,7 +904,7 @@ func (s Message_content) StopWorkerResponse() (StopWorkerResponse, error) {
 	if capnp.Struct(s).Uint16(0) != 3 {
 		panic("Which() != stopWorkerResponse")
 	}
-	p, err := capnp.Struct(s).Ptr(0)
+	p, err := capnp.Struct(s).Ptr(2)
 	return StopWorkerResponse(p.Struct()), err
 }
 
@@ -876,12 +912,12 @@ func (s Message_content) HasStopWorkerResponse() bool {
 	if capnp.Struct(s).Uint16(0) != 3 {
 		return false
 	}
-	return capnp.Struct(s).HasPtr(0)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Message_content) SetStopWorkerResponse(v StopWorkerResponse) error {
 	capnp.Struct(s).SetUint16(0, 3)
-	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+	return capnp.Struct(s).SetPtr(2, capnp.Struct(v).ToPtr())
 }
 
 // NewStopWorkerResponse sets the stopWorkerResponse field to a newly
@@ -892,7 +928,7 @@ func (s Message_content) NewStopWorkerResponse() (StopWorkerResponse, error) {
 	if err != nil {
 		return StopWorkerResponse{}, err
 	}
-	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	err = capnp.Struct(s).SetPtr(2, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
@@ -900,7 +936,7 @@ func (s Message_content) UpdateWorkerStatus() (UpdateWorkerStatus, error) {
 	if capnp.Struct(s).Uint16(0) != 4 {
 		panic("Which() != updateWorkerStatus")
 	}
-	p, err := capnp.Struct(s).Ptr(0)
+	p, err := capnp.Struct(s).Ptr(2)
 	return UpdateWorkerStatus(p.Struct()), err
 }
 
@@ -908,12 +944,12 @@ func (s Message_content) HasUpdateWorkerStatus() bool {
 	if capnp.Struct(s).Uint16(0) != 4 {
 		return false
 	}
-	return capnp.Struct(s).HasPtr(0)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Message_content) SetUpdateWorkerStatus(v UpdateWorkerStatus) error {
 	capnp.Struct(s).SetUint16(0, 4)
-	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+	return capnp.Struct(s).SetPtr(2, capnp.Struct(v).ToPtr())
 }
 
 // NewUpdateWorkerStatus sets the updateWorkerStatus field to a newly
@@ -924,7 +960,7 @@ func (s Message_content) NewUpdateWorkerStatus() (UpdateWorkerStatus, error) {
 	if err != nil {
 		return UpdateWorkerStatus{}, err
 	}
-	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	err = capnp.Struct(s).SetPtr(2, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
@@ -932,7 +968,7 @@ func (s Message_content) UpdateWorkerStdio() (UpdateWorkerStdio, error) {
 	if capnp.Struct(s).Uint16(0) != 5 {
 		panic("Which() != updateWorkerStdio")
 	}
-	p, err := capnp.Struct(s).Ptr(0)
+	p, err := capnp.Struct(s).Ptr(2)
 	return UpdateWorkerStdio(p.Struct()), err
 }
 
@@ -940,12 +976,12 @@ func (s Message_content) HasUpdateWorkerStdio() bool {
 	if capnp.Struct(s).Uint16(0) != 5 {
 		return false
 	}
-	return capnp.Struct(s).HasPtr(0)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Message_content) SetUpdateWorkerStdio(v UpdateWorkerStdio) error {
 	capnp.Struct(s).SetUint16(0, 5)
-	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+	return capnp.Struct(s).SetPtr(2, capnp.Struct(v).ToPtr())
 }
 
 // NewUpdateWorkerStdio sets the updateWorkerStdio field to a newly
@@ -956,7 +992,7 @@ func (s Message_content) NewUpdateWorkerStdio() (UpdateWorkerStdio, error) {
 	if err != nil {
 		return UpdateWorkerStdio{}, err
 	}
-	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	err = capnp.Struct(s).SetPtr(2, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
@@ -964,7 +1000,7 @@ func (s Message_content) UpdateClientInfo() (UpdateClientInfo, error) {
 	if capnp.Struct(s).Uint16(0) != 6 {
 		panic("Which() != updateClientInfo")
 	}
-	p, err := capnp.Struct(s).Ptr(0)
+	p, err := capnp.Struct(s).Ptr(2)
 	return UpdateClientInfo(p.Struct()), err
 }
 
@@ -972,12 +1008,12 @@ func (s Message_content) HasUpdateClientInfo() bool {
 	if capnp.Struct(s).Uint16(0) != 6 {
 		return false
 	}
-	return capnp.Struct(s).HasPtr(0)
+	return capnp.Struct(s).HasPtr(2)
 }
 
 func (s Message_content) SetUpdateClientInfo(v UpdateClientInfo) error {
 	capnp.Struct(s).SetUint16(0, 6)
-	return capnp.Struct(s).SetPtr(0, capnp.Struct(v).ToPtr())
+	return capnp.Struct(s).SetPtr(2, capnp.Struct(v).ToPtr())
 }
 
 // NewUpdateClientInfo sets the updateClientInfo field to a newly
@@ -988,7 +1024,7 @@ func (s Message_content) NewUpdateClientInfo() (UpdateClientInfo, error) {
 	if err != nil {
 		return UpdateClientInfo{}, err
 	}
-	err = capnp.Struct(s).SetPtr(0, capnp.Struct(ss).ToPtr())
+	err = capnp.Struct(s).SetPtr(2, capnp.Struct(ss).ToPtr())
 	return ss, err
 }
 
@@ -997,7 +1033,7 @@ type Message_List = capnp.StructList[Message]
 
 // NewMessage creates a new list of Message.
 func NewMessage_List(s *capnp.Segment, sz int32) (Message_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 1}, sz)
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 3}, sz)
 	return capnp.StructList[Message](l), err
 }
 
@@ -1018,132 +1054,135 @@ func (f Message_content_Future) Struct() (Message_content, error) {
 	return Message_content(p.Struct()), err
 }
 func (p Message_content_Future) StartWorkerRequest() StartWorkerRequest_Future {
-	return StartWorkerRequest_Future{Future: p.Future.Field(0, nil)}
+	return StartWorkerRequest_Future{Future: p.Future.Field(2, nil)}
 }
 func (p Message_content_Future) StartWorkerResponse() StartWorkerResponse_Future {
-	return StartWorkerResponse_Future{Future: p.Future.Field(0, nil)}
+	return StartWorkerResponse_Future{Future: p.Future.Field(2, nil)}
 }
 func (p Message_content_Future) StopWorkerRequest() StopWorkerRequest_Future {
-	return StopWorkerRequest_Future{Future: p.Future.Field(0, nil)}
+	return StopWorkerRequest_Future{Future: p.Future.Field(2, nil)}
 }
 func (p Message_content_Future) StopWorkerResponse() StopWorkerResponse_Future {
-	return StopWorkerResponse_Future{Future: p.Future.Field(0, nil)}
+	return StopWorkerResponse_Future{Future: p.Future.Field(2, nil)}
 }
 func (p Message_content_Future) UpdateWorkerStatus() UpdateWorkerStatus_Future {
-	return UpdateWorkerStatus_Future{Future: p.Future.Field(0, nil)}
+	return UpdateWorkerStatus_Future{Future: p.Future.Field(2, nil)}
 }
 func (p Message_content_Future) UpdateWorkerStdio() UpdateWorkerStdio_Future {
-	return UpdateWorkerStdio_Future{Future: p.Future.Field(0, nil)}
+	return UpdateWorkerStdio_Future{Future: p.Future.Field(2, nil)}
 }
 func (p Message_content_Future) UpdateClientInfo() UpdateClientInfo_Future {
-	return UpdateClientInfo_Future{Future: p.Future.Field(0, nil)}
+	return UpdateClientInfo_Future{Future: p.Future.Field(2, nil)}
 }
 
-const schema_dcccaa5d36aa8b70 = "x\xda\xa4\x96}h\x14\xf9\x19\xc7\x9fg~;;\xee" +
-	"\xb2\xebf;kA\xb0\x04[\x02U\xe8\xfa\x92\xda\x17" +
-	"A\xd6M\xb2\x91\xb5&\xd9\xd9\xd94\x16\x0c8f\xc7" +
-	"\xb85\xd9\xdd\xec\xcc\xaa\xc1HZ(5*\xb6U\x9b" +
-	"\xd6\x14[\xad\xc4V\x83\xad\x09\xb5\x90\x14\xdbjk\xaa" +
-	"\xd8\x04lz\xc2\x19r\x1ez\xeai\xf0\x0e\xccyp" +
-	"\x97\xd3\x9b\xe37\xb3\xef\xb3'\xca\xfd\xb7;|\xe6;" +
-	"\xdf\xe7\xf9=/\xbf\x95\x7f&\xeb-\xab\x9c\x17\xec\xc0" +
-	"\x08=\xacU{~\xe3\xc1\xb2\xbb\xd7\xce\xee\x07\xb7\xc3" +
-	"\xa2%\x0f\x0d}\xabuhb\x06\x00\xab\xd7\xb1\x0c\xf2" +
-	"A\x96\x03\x10\xebX\x82b\x88e\x10@;\xe1\xaf\xee" +
-	"\x99\x1c\x1b=X\xca\xf3\xcd\xec\x0d^\xd2\xf1-\x14\xdf" +
-	"a\xe0\xefm\xfc\xe6\xd8X\xfa\xce!\x13\x1ec\xef\xf1" +
-	"i\x1dOR\xbc\xc7\xc0\xfb\x7f6\xdc\xfa\x1dv\xcd\x11" +
-	"\x13\xbe\x8f\x9d\xe2\x0f\xe8\xf8O(\xfe\x0b\x03\xffH\xb9" +
-	"\xde\xfbpi\xe4\x98\x09?\xcc\xce\xf3\x03:\xfeK\x8a" +
-	"\x9f2\xf0\xef\x8e_\xfb\xf5\xd7\x86\xad\xfd&\xfc\x0c{" +
-	"\x8f\x1f\xd1\xf1\xf3\x14\x1f5\xf0\x89~\xff]o\xcd\xa0" +
-	"\x19\x1fc\xe7\xf8q\x1d\xbfL\xf1\x09\x03\xdfy\xe2\xe1" +
-	"\xa0\x97\x1c=\x0en\x07\xe6q\x96p\x00\xfc$;\xcf" +
-	"\xdf\xa6o\xf0\xb7\xd8\x0b\x80\xda\xf0\x7f\x07F]#\xca" +
-	"\xa9\x12\xd6B\x89\xc3\xd6Y~\xc0J\x7f\xf5[\xdf\x05" +
-	"\xd4\xde\xbeur\x09&\x97\xff\x01\x04\x07\x16\xc0:\xdb" +
-	"\xc5\xcd\xf3\xfb8\xfa\xab\x9b\xf3\x01j\xdb\x1e\x9f\xb3\xfc" +
-	"j\xed\x0f\xffX\xa2\x8b\x94\x18\xe0\xe6\xf83:\xfb{" +
-	"\x9d\xbdt,\xa1\xf6\xadk\xbc`\x0a\xef\x0a7\xcdO" +
-	"RP\xbc\xce\x11\x14\xdf\xe0\xf4\xf0\xfc\xe4\xa7}\x17\xf7" +
-	"\xc4\xcc\xf8-\xee_\xfc[:\xfe&\xc5\xef\x1b\xf8\xf0" +
-	"\xff\x03\xf1\xb3u[F\x8a\x9d\xe8\xa6\x1fps\xfcS" +
-	"\x8e\x03\xa2\xb9\x87Z\x16\x9f^!_\x04\xc1\x83\xa8M" +
-	"v\xaf\xf8v\xeflr\x0a\x9a\x91\xd3\x1dOr\xf7\x00" +
-	"\xab\xff\xc7\xfd\x1c\x01\xb5\xc1\xed\xff\x1c\xf8\xca\xfd\xb9\xbf" +
-	"\x99\xbe\x7f\xc46\xc5\xff\xd6F\xbf\x7f\xdcFP\x1c\xb4" +
-	"\xe9\xdf\x1f8p\xfd\x1b\xab\xbb\xff\xfdw\xf3Y\xdb\xa6" +
-	"\xf9\x11\x1d?O\xf1Q\x03\xaf\xd9\xb6\xf2\x89}\xef\x8f" +
-	"\xfea>k\xdb\x1c?\xae\xe3\x97)>a\xe0\x87\xcf" +
-	"\x9e\xfc`\xaf\xe5\xd9x\x99<WO\xda\x18\xe4o\xdb" +
-	"\xf4\xc3\xb6\xd1D\x9f\xb9t\xaa\xefw\x1b\xfa\xaf\x99\xb4" +
-	"?\xb4\xcd\xf2h\xa7\xda\xcf\xa9\xf6\x02\xbb\xae\x9dKC" +
-	"\xf1y\x1b\x87\xe8\xb4\x9f\xe6\x17\xd1Wx\xb7\x9dj7" +
-	"-|\xbc{\xdd\xe2\xff\xcc\x98\xb4\x17\xd9\xa7\xf9\xa5\xba" +
-	"\xf6\x12;A\xf1\xeb\x86\xf6_\x94'K\xdf\xf9\xd3\xb9" +
-	";\xe5\xeac\x99}\x9e_\xa3K\xaf\xd2\xa5\xbf\xdcW" +
-	"\xbf\xdf\xf3\xe3m\xef\x9b\xa4\x05\xfb,\xdf\xaaKo\xa6" +
-	"\xd2Q*\xdd\xa0I\xedr\\\xf5\xb6I$\x19O\xae" +
-	"M'\xa3\x92*\xb7$R;\xe5\x94\xa8JjZ\x89" +
-	"@\x08\x11\x1d\xc0\xa0\x03`\x15~\x09\xb5\xfa\x8d^\x7f" +
-	"(\xe8m!M\xe1\xef\x05\xc2\xde\xe6P\x9d?\x12\xf0" +
-	"\x8a\x11\x7f\xa4Y\xf4V)\xde*Tr\xa2\x0c\x15U" +
-	"T)\xa5\x1a\x9a\x11(\x94s\xe3TN\x8d1\xd4\xc4" +
-	"\x88?\x1c)\xab\"\xefR\xc5\xac\x10'\xa7\"E\xb6" +
-	"\x18\xc3\xd6\x86@c\xc4J\xdf\x0e|?\xe2m1\x14" +
-	"\xab\x14C\x14\xb2j\x191?\xfd\x1b\x8coO`\xa4" +
-	"\xc8\xd2PN\x09\xb3J\xae`c}S\xb1\x9b\xdd\xa9" +
-	"X.O>5\x9aH\xab\xc5\x86\xec\xa6<\xb5\x84\x83" +
-	"z\x9a\xea\x9a\x9a\x8d\x00\x15\x80b\xcd\xb6\xce\xe8\xabG" +
-	"X\xdbP\xf7\xd2\x08\x0b\x0dV\xaa\xd1X\xbc\xac\x1c\xf5" +
-	"g-\xf1\x17l\xcc\xd8+\x94\x13\xf3g\x18\xf6\xc9]" +
-	"iYQC\x88\x82\x83X\x00,\x08\xe0\x0e\xd4\x00\x08" +
-	"\xeb\x09\x0a\x9b\x18t#z\x90>\x0c.\x07\x10\xea\x08" +
-	"\x0a[\x19t3\x8c\x07\x19\x00w\xebW\x01\x84\xcd\x04" +
-	"\x05\x95\xc1\xde\xb6Dg\xa7\x14\x8ff\x8c\xa1KJ\xb5" +
-	"+\xb8\x100D\x0c\xb3\x0b\x0199\xbe\xab\xe4Qq" +
-	"\xde\x9a\xf5\xa2\xad\xed\x88\xc9q\xd5EO\x94:\xab\xc8" +
-	"9\x936\x02\x08[\x09\x0a\x1d\x05\xceb\xf4\xe1\x0e\xc3" +
-	"D\xceY\xd7Z\x00\xa1\x83\xa0\xb0\x87A7!\x1e$" +
-	"\x00\xee4\x0d,IP\xe8aPK+r*.u" +
-	"\xca\x00\x90\xb5\xac\xedH(j\xc93\x9f\xd2\xad\xa8r" +
-	"g\xf6o\xaf\x14\x8d\xa6dE\xc9\xbdR\xc6\xbe\x91[" +
-	"\x9f\xd1t4\x00K.\x00'\xb5\xb5\x80\xa0\xe0a\xd0" +
-	"\xa7\xe8\x00\xb2\xc0 \xfb2\xa5JQ\x8d\xc6\x12%B" +
-	"\xcb\xf3B\xae\xa8\xa4J\xe8\x04\x06\x9d\xa52z\xa7%" +
-	"\x92\xba\x0eI\x15w\xc7|\xae\x0a\x99\xd2>\xf3\xd12" +
-	"l\x0a\x95\xf6~F(\x15)\xee\xfc\x1b\xe6\xceo\x0a" +
-	"\x95\xef\x8b\x9c\x99TX\xae\xcc\x96^1\xd2 +\x8a" +
-	"\xd4.{\xdb\x12q\x95\x93\xe3\xaa\xb0\x84X\x1c\x9a\xa6" +
-	"G\xfd\xd7\xdf\x00\x08\xa3\x04\x85\xab\x0c:\xf1S\xcd(" +
-	"\x80+\xa7\x01\x84\xab\x04\x85\x9b\x0c:\x99\x17\x9aQ\x01" +
-	"\x93G\x01\x84\x9b\x04\x85\x19\x06\x9d\xe4\xb9f\x94\xc0m" +
-	"\xaa0CPx\xc4\xa0\xd3\xf2\x89\xe6A\x0b\x80\xfb\x01" +
-	"}\xfa\x88\xa0\xf0\x8cA';\xafy\x90\x05p?\xa5" +
-	"\x0a\xcf\x08\x86\x91A\xa7\xf5c\xcd\x83V\x00\xf7\x8b\x83" +
-	"\x00a$(:h\xe7e\x07\"\xea!u\xa5e\xa2" +
-	"\xa8X\x91\xbf\x88\x00b\x05\x94bJ2\xc1\xc5\x15\x19" +
-	"+\xf2K,\xc7\x19\xf9\xc1\x8c\x9a\x82T-\xb7\xc8\xcb" +
-	"QJ2\x11'\xbaXn\xb3d\xb0\xec\x06\xc0\xec\x0a" +
-	" i\x05+\xf2\x97\x99\xf2X4\x86\x09\xac\xc8_c" +
-	"\x8a\xa8\xda\x0e\x8cef-\x00u\x96\xbdDe\xa8\xa2" +
-	"\x93L\xc9\xc9\x8e\xee\xccq\x96L\xe6\xe9l\xc940" +
-	"\x01Q\xf4o\x08x\xc3\x81\xd0\xa6\x1f\xd0\xa2!U\x8a" +
-	"i\x96\xb6\xd0\x09H\xad\x91\xf8\xeb\x8d\xd2\xba`c\xd1" +
-	"\xecK\x17\xcc\x97J\x1aE\xb1\xad\xd9\xac\xadZfS" +
-	"0\xd0\x18\xc9n\xc4`c\xbd\xab\xc9[`\x8c\x94\x0e" +
-	"R\xfd\x18\x14\x19J\xbatu\xbeK+\xe5T*\x91" +
-	"*?7\xe4]jvQG]\x9f\xb7\x80h\x90\xa4" +
-	"\xdcF\xa4k\xa8\xa0\xd10\xdbE\x9c\xd4.\xe7\xfc " +
-	"\xe6\xafzng\x0d0\xbd\xb4\xc1\xe4\xb8Zfq\xbd" +
-	"\xda\xc0(\xccu\xd9\x81Q\xd8\xec>#?_8=" +
-	"\x92\x8b^d^+=\xf42\x03\xf0Y\x00\x00\x00\xff" +
-	"\xff\xeeU\xdb\x8b"
+const schema_dcccaa5d36aa8b70 = "x\xda\xa4\x97}L\x1cy\x19\xc7\x9f\xe7\xf7\xdbe\xd8" +
+	"\x0dt\x19\x07M.)\xc1\xd3\xf0\x87\xc4[\xef\xca\x9d" +
+	"zM\x9a\xedR\x96\xde\xd6\x02;\xbb\x83\xdc%\x92\xdc" +
+	"\x94\x9d\xa3+0\xb373\xdb;r\x184\xbe\x1cw" +
+	"\xe7\x1bwA\xc1\xb4^\xbdP\xa5\x8d\x97B\xb4\x09\x98" +
+	"\xfa\xde\xda\xa6\x16\xd3\xa0\xfd\xa3\x84T\x8b\xb6\xb6\xa4\x9a" +
+	"\x885Ql\x1d\xf3\x9b\xd9\xd9\xb7Y\x9b6\xfe\xd7>" +
+	"\xf9\xccw\xbe\xcf\xeb,\x8f/\xd3\xdd\xbe'\xeaO\x06" +
+	"\x81\x88c\xfe\x1a\xeb7G\xd7[\x93\xd2\xc1\xcf\x83\xd8" +
+	"\x88h-\x8f~\xe4c\xe3\x1b\xd9\x15\xe8\xa5\x1cr\x00" +
+	"\xc2.\xff:`[\xd4\xff5\x04\xb4\xee^\xb8\xfe\xa1" +
+	"k\xe7\xe6^\x05\xbe\xcege\xdf8\xf1\xd1\xfe\x13\x17" +
+	"\xd7\x00\xb0\x0d9\x82B=\xc7\x01\xa4j9\x8a\xa9F" +
+	"\x8e \x80u8\xda6\xb6\xbc\xb4\xf8z%/<\xc2" +
+	"]\x10Zl\xfc\xfd\x0c\xff\xb0\x83\xffe\xdf\x93KK" +
+	"\xb9\xabox\xf0\xc7\xb8u\xe1i\x1b\x7f\x92\xe1\xbb\x1d" +
+	"|\xea\xab\xf3\xfd\x1f\xf7?5\xe9\xc1\xa3\xdc\x8a\xd0e" +
+	"\xe3\xcf0\\r\xf0\x7f\x1a\xe7\xc7o<*\xbd\xe5\xc1" +
+	"EnK\xe8\xb7\xf1g\x19\x9ev\xf0\xa7\xcf\x9e\xfb\xe6" +
+	"\x07\xe7k\xa6<x\x86[\x17r6\x9ee\xf8\x98\x83" +
+	"_\x9c\x8a^\x0b\xb7\xcfz\xf1\xcfp\x9b\xc2k6\xfe" +
+	"\x05\x86\x7f\xdd\xc1\x87\x0e\xdf\x98\x0d\xd37\xa7\x81\xaf\xc3" +
+	"\"\xee\xa7\xac\xe4\x93\xdc\x96p\x84=!\xccp'\x01" +
+	"\xad\xf9_\xcf,\x86\x16\x8c\xa3\x15\xac\x8f\x11b\xed\x86" +
+	"\xd0_\xcb\xfe\xf5\\\xed\x9f\x01\xad\xdf_~{;f" +
+	"[\xbf\x0bb\x1d\x96\xc06\xfbT`K\x88\x06\xec\xa6" +
+	"\x06\"\x80\xd6\x81[\xc7}\xdf\xd8\xf9\xe9\xefU\xe8\xda" +
+	"m\xef\x0fl\x0a\x19\x9bUl\xf6\xf4[\x9a9\xb1\xab" +
+	"\xfb\xa4'\xbd/\x06V\x85I\x06\xa6\xbe\x1c\xa0\x98\x9a" +
+	"\x0e\xd8\xe9E\xe9\x97&~\xf8r\xc6\x8b\xcf\x04~!" +
+	"|\xc7\xc6\x0f3|\xce\xc1\xe7\x7f\x1bS\xe7:>\xb5" +
+	"P\xee\xc46}<\xb0)\x9c\x0ap@\xad\xd9\x17~" +
+	":\xd3\xf4\xa7\xcd\x1fy4'\x03+\xc2\x11[s\x9a" +
+	"i\xce:\x9a3\xaf\x9d\x7fl\xc7\xe8/\x7f\xec\xc1\x8f" +
+	"\x05V\x85\x05\x1b\xff>\xc3\x17\x1d\xbc\xfd\xc0\xe3\xb7\x83" +
+	"\xaf|\xf6'\x1e|)\xb0)\x9c\xb5\xf1\x9f1\xfc\xa2" +
+	"\x83\x7fe\xee\xed\xbf\xbf\xe2\xbbs\xb6J\xed\xda\x96\x03" +
+	"\x04\x85+v\xf1.\xdb\xc5;v\xfa\xe8\xc4\xb7\xf7N" +
+	"\x9d\xf3h\xff#\xb0!`\x90i\xdfe\xda\xb5A[" +
+	"\xbb\xb0\x83\xe5=t\x86\xa3>\xf8\x8e\xf0^\xf6\x88\xc0" +
+	"\x07\xd9p\xf4l\xbb\xf5\xd2\xaeG~\xb5\xe6\xadJp" +
+	"U8bkO\x07YU\x1c\xed\x1f\x18\xb7\x1f\xfd\xe3" +
+	"\xbb\xc7\xafV\xeb\xf9\xb1\xe0\x96\xb0`K\xbf\x1bd\xb6" +
+	"\xdf7\xd1\xf9j\xe3\xe7\x0e\xfc\xd5#\xbd\x1c\xdc\x10\xae" +
+	"\xd8\xd2\xbfc\xd2\x7f`\xd2]\x96<\xa8\xa8fx@" +
+	"&Y5\xbb\xb3K1\x0cyP\x09\x0fh\xaa\xc9)" +
+	"\xaa)n\xa7\xbe\xed\x96E\x1a\x91\x00\xf0\xa7\xbe\x05 " +
+	".R\x14\xcf\x10l\xc2\xff\xb00\x05\xe0\x7f\xfe\x0e\x80" +
+	"x\x86\xa2x\x89`\x13\xb9\xc7\xc2>\x00~\xf9M\x00" +
+	"\xf1\x12Eq\x8d`\x13\xbd\xcb\xc2~\x00\xfe\x0a\x13Y" +
+	"\xa3(\xde$\xd8\xe4\xfb7\x0b\xd7\x00\xf0\xd7Y\xf8&" +
+	"E\xf1\x0e\xc1&\xff\x16\x0bs\x00\xfc\xdf\x98\xc8\x1d\x8a" +
+	"I$\xd8T\xf3/\x16\xae\x05\xe0\xef\xbd\x0e\x90D\x8a" +
+	"\xa9:$h\x19\xa6\xac\x9b}\x9a\x8eC\x8a\x9eT^" +
+	"\xcc)\xd40\xb1\xa1\xb8\xac\x80\xd8\x00\x95\x98\x91\xd58" +
+	"\xd5P\xb0\xa18\x14\x05N\xcb\xf6i\xfa\x10\xe6\xd5\x0c" +
+	"dj\x85a\xafF\x19YM\xa5\xb6X\xa1Sy," +
+	"\x97M\xcb\xa6\xd2\xa7\xa1>\xa4\xe8)S6i\xce\xc0" +
+	"\x86\xe2\xc2W\xc7\xd2\x19\xd4\xb0\xa1\xb8\xeae\xd4\x9ea" +
+	"\xcc(\xaa\x19W_\xd0\x00\x983\xf7\xd0\xe4)\xb7\xa3" +
+	"\x94u\xd4\x15v_\x9f3$H b\x1d\x10\xac\x03" +
+	"x\x02\xdf\x83V\xe7\xbep4\x11\x0f\xf7\xd1\x9e\xe4'" +
+	"b\xc9po\xa2#*\xc5\xc2))*\xf5\xa6\xc2-" +
+	"F\xb8\x05\x8d\xf21q+9\xa4\xe8\x12\x94\xca\xf1\xb8" +
+	"RP#\x8eZJ\x8a&\xa5\xaa*\xca!3\xe5\x0a" +
+	"q\x8a.\x95\xd9\"\x8e\xad\xbd\xb1n\xa9\x86=\x1d\xfb" +
+	"\xa4\x14\xees\x14[\x0cG\x14\\\xb5\xbcXt0_" +
+	"\x15\x94\xca,\x9d((\xa1\xab\x14\x8aww\xf6\x94\xbb" +
+	"yI\xcf\x14\xea\x141\xd3Z\xce,7\x14\xf4\xd4\xa9" +
+	"/\x19\xb7\xcb\xd4\xd1\xd3\xeb$h\x00\x94k\x0e\x8c\xa4" +
+	"\x1f<\xc3=]\x1d\xf7\xcd\xb0\xd4`\xb3\x99\xce\xa8U" +
+	"\xe5\x98\xbf\x9a\x0a\x7f\xf1\xee\xbc\xbdR\xb9T\xb1\x87\xc9" +
+	"\x88=\xe6f\x02Q\xac\xa3>\x00\x1f\x02\xf0\xb1v\x00" +
+	"q7Eq?A\x1e\xb1\x11Y0\xde\x0a vP" +
+	"\x14\x9f'\xc8\x93\xfc]\xe8\xff\x00\x80\xf8,E\xd1$" +
+	"8>\xa0\x8d\x8c\xc8j:o\x0cC\xb2>h\xe06" +
+	"\xc0\x04u\xccn\x03\xe4\x14\xf5PE\xa8\xbcn\xbd\xf9" +
+	"9gc\x1eb\x1de\xce\x1a\x0a\xce\xe4}\x00\xe2\xf3" +
+	"\x14\xc5\xe1\x12g\x19\x16<\xe8\x98(8{q'\x80" +
+	"8LQ|\x99 O\xa9s\xafr,\xb1,Eq" +
+	"\x8c\xa0\x953\x14]\x95G\x14\x00p-[\x075\xc3" +
+	"\xac\x88E\x8cQ\xc3TF\xdc\xff\x8e\xcb\xe9\xb4\xae\x18" +
+	"F\xe1\x91*\xf6\x9d\xdaF\x9c\xa5c\x09\xf8\x0a\x09\xd4" +
+	"3[\xb5\x14\xc5F\x82\x11\xc3\x06\xd0\x0f\x04\xfd\xf7S" +
+	"jfgA\xab\x10j-\x0a\x85\xd2\xb2)c=\x10" +
+	"\xac\xaf\x94\xb17\xcd9W\x0a\xd5\xcb\xb7c\xab0\x85" +
+	"\xa4r\xcf\"l\x0c{\x12\x95\xbb\x9f\x17\xd2\xa5\xf2\xcd" +
+	"\xbf\xe0\xdd\xfc\x9eD\xf5\xbd(\x98\xd1\x93J\xb3;z" +
+	"\xe5\x88\xaed\x87G\xf3\x9f\xa3\x8a}^u_\xd4E" +
+	"b\xa9Tto,\x9c\x8c%\xf6?\xc7^E[\x0c" +
+	"\xcf\x06\xf6\xb1\xbda\xb5\xa3\xea\xc3-`G\xbc\xbbl" +
+	"cr%S\xd9\xcc\xa6\xb2\xdc\xd6\x86kk\x0f\xd9\x1f" +
+	"\x8fuK\xee\x1d\x8dww\x86z\xc2%\xc6h\xe5\xfa" +
+	"\xd9\x9f\x0fC\x81\x8a\xde\xee(\xf6\xb6Y\xd1uM\xaf" +
+	">m\xca!\xd3=\xef\xe9\xd0\xff:[,IZ\xed" +
+	"\x8e\xb2\xe3U\xd2\x1et\x7f\x05p\xf2\xa0Rq\x0fv" +
+	"T\xbb\x07:\x80\xf8\x0cEQ\"\x88\x04\xb1\xf8w\x09" +
+	"/\xb6\x03i\x1e1\x06\xe3\x85[`\x0dh\xba\xae\x0c" +
+	"\xcb&4g4\xb5\x18\x1fg?7\x14\xd5\xacr<" +
+	"\x1flhK;WuhK\x07.\xe2T\xfb\xff." +
+	"\xb6\x1cb\x1f\xd3\x87*6\xfb\xa0\x02\xfc7\x00\x00\xff" +
+	"\xff\xf4\xf0\xe4\x87"
 
 func RegisterSchema(reg *schemas.Registry) {
 	reg.Register(&schemas.Schema{
 		String: schema_dcccaa5d36aa8b70,
 		Nodes: []uint64{
+			0x836854522ae2a0ce,
 			0x87a8c7e129e5cafc,
 			0x8ab8b9cd7c33419c,
 			0x8bde75b9b9344aed,
@@ -1158,7 +1197,6 @@ func RegisterSchema(reg *schemas.Registry) {
 			0xaf4e3d88746f93bc,
 			0xaf6978b488860341,
 			0xb15c44a86e45d3b0,
-			0xb4652fa21957aa11,
 			0xbaf2e41d99bf66a4,
 			0xbdc379322dc88999,
 			0xbe807b0aec306242,
