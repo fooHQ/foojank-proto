@@ -65,13 +65,15 @@ struct UpdateClientInfo {
 }
 
 struct Message {
+    msgId @0 :Text;
+    correlationId @1 :Text;
     content :union {
-        startWorkerRequest @0 :StartWorkerRequest;
-        startWorkerResponse @1 :StartWorkerResponse;
-        stopWorkerRequest @2 :StopWorkerRequest;
-        stopWorkerResponse @3 :StopWorkerResponse;
-        updateWorkerStatus @4 :UpdateWorkerStatus;
-        updateWorkerStdio @5 :UpdateWorkerStdio;
-        updateClientInfo @6 :UpdateClientInfo;
+        startWorkerRequest @2 :StartWorkerRequest;
+        startWorkerResponse @3 :StartWorkerResponse;
+        stopWorkerRequest @4 :StopWorkerRequest;
+        stopWorkerResponse @5 :StopWorkerResponse;
+        updateWorkerStatus @6 :UpdateWorkerStatus;
+        updateWorkerStdio @7 :UpdateWorkerStdio;
+        updateClientInfo @8 :UpdateClientInfo;
     }
 }
