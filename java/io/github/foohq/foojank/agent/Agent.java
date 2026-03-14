@@ -525,7 +525,7 @@ public final class Agent {
 
 
   public static class Message {
-    public static final org.capnproto.StructSize STRUCT_SIZE = new org.capnproto.StructSize((short)1,(short)1);
+    public static final org.capnproto.StructSize STRUCT_SIZE = new org.capnproto.StructSize((short)1,(short)3);
     public static final class Factory extends org.capnproto.StructFactory<Builder, Reader> {
       public Factory() {
       }
@@ -552,12 +552,42 @@ public final class Agent {
       public final Reader asReader() {
         return new Reader(segment, data, pointers, dataSize, pointerCount, 0x7fffffff);
       }
+      public final boolean hasMsgId() {
+        return !_pointerFieldIsNull(0);
+      }
+      public final org.capnproto.Text.Builder getMsgId() {
+        return _getPointerField(org.capnproto.Text.factory, 0, null, 0, 0);
+      }
+      public final void setMsgId(org.capnproto.Text.Reader value) {
+        _setPointerField(org.capnproto.Text.factory, 0, value);
+      }
+      public final void setMsgId(String value) {
+        _setPointerField(org.capnproto.Text.factory, 0, new org.capnproto.Text.Reader(value));
+      }
+      public final org.capnproto.Text.Builder initMsgId(int size) {
+        return _initPointerField(org.capnproto.Text.factory, 0, size);
+      }
+      public final boolean hasCorrelationId() {
+        return !_pointerFieldIsNull(1);
+      }
+      public final org.capnproto.Text.Builder getCorrelationId() {
+        return _getPointerField(org.capnproto.Text.factory, 1, null, 0, 0);
+      }
+      public final void setCorrelationId(org.capnproto.Text.Reader value) {
+        _setPointerField(org.capnproto.Text.factory, 1, value);
+      }
+      public final void setCorrelationId(String value) {
+        _setPointerField(org.capnproto.Text.factory, 1, new org.capnproto.Text.Reader(value));
+      }
+      public final org.capnproto.Text.Builder initCorrelationId(int size) {
+        return _initPointerField(org.capnproto.Text.factory, 1, size);
+      }
       public final Content.Builder getContent() {
         return new Message.Content.Builder(segment, data, pointers, dataSize, pointerCount);
       }
       public final Content.Builder initContent() {
         _setShortField(0,(short)0);
-        _clearPointerField(0);
+        _clearPointerField(2);
   return new Message.Content.Builder(segment, data, pointers, dataSize, pointerCount);
       }
 
@@ -568,6 +598,20 @@ public final class Agent {
         super(segment, data, pointers, dataSize, pointerCount, nestingLimit);
       }
 
+      public boolean hasMsgId() {
+        return !_pointerFieldIsNull(0);
+      }
+      public org.capnproto.Text.Reader getMsgId() {
+        return _getPointerField(org.capnproto.Text.factory, 0, null, 0, 0);
+      }
+
+      public boolean hasCorrelationId() {
+        return !_pointerFieldIsNull(1);
+      }
+      public org.capnproto.Text.Reader getCorrelationId() {
+        return _getPointerField(org.capnproto.Text.factory, 1, null, 0, 0);
+      }
+
       public Content.Reader getContent() {
         return new Message.Content.Reader(segment, data, pointers, dataSize, pointerCount, nestingLimit);
       }
@@ -575,7 +619,7 @@ public final class Agent {
     }
 
     public static class Content {
-      public static final org.capnproto.StructSize STRUCT_SIZE = new org.capnproto.StructSize((short)1,(short)1);
+      public static final org.capnproto.StructSize STRUCT_SIZE = new org.capnproto.StructSize((short)1,(short)3);
       public static final class Factory extends org.capnproto.StructFactory<Builder, Reader> {
         public Factory() {
         }
@@ -620,15 +664,15 @@ public final class Agent {
         public final io.github.foohq.foojank.Agent.StartWorkerRequest.Builder getStartWorkerRequest() {
           assert which() == Message.Content.Which.START_WORKER_REQUEST:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.StartWorkerRequest.factory, 0, null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.StartWorkerRequest.factory, 2, null, 0);
         }
         public final void setStartWorkerRequest(io.github.foohq.foojank.Agent.StartWorkerRequest.Reader value) {
           _setShortField(0, (short)Message.Content.Which.START_WORKER_REQUEST.ordinal());
-          _setPointerField(io.github.foohq.foojank.Agent.StartWorkerRequest.factory,0, value);
+          _setPointerField(io.github.foohq.foojank.Agent.StartWorkerRequest.factory,2, value);
         }
         public final io.github.foohq.foojank.Agent.StartWorkerRequest.Builder initStartWorkerRequest() {
           _setShortField(0, (short)Message.Content.Which.START_WORKER_REQUEST.ordinal());
-          return _initPointerField(io.github.foohq.foojank.Agent.StartWorkerRequest.factory,0, 0);
+          return _initPointerField(io.github.foohq.foojank.Agent.StartWorkerRequest.factory,2, 0);
         }
         public final boolean isStartWorkerResponse() {
           return which() == Message.Content.Which.START_WORKER_RESPONSE;
@@ -636,15 +680,15 @@ public final class Agent {
         public final io.github.foohq.foojank.Agent.StartWorkerResponse.Builder getStartWorkerResponse() {
           assert which() == Message.Content.Which.START_WORKER_RESPONSE:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.StartWorkerResponse.factory, 0, null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.StartWorkerResponse.factory, 2, null, 0);
         }
         public final void setStartWorkerResponse(io.github.foohq.foojank.Agent.StartWorkerResponse.Reader value) {
           _setShortField(0, (short)Message.Content.Which.START_WORKER_RESPONSE.ordinal());
-          _setPointerField(io.github.foohq.foojank.Agent.StartWorkerResponse.factory,0, value);
+          _setPointerField(io.github.foohq.foojank.Agent.StartWorkerResponse.factory,2, value);
         }
         public final io.github.foohq.foojank.Agent.StartWorkerResponse.Builder initStartWorkerResponse() {
           _setShortField(0, (short)Message.Content.Which.START_WORKER_RESPONSE.ordinal());
-          return _initPointerField(io.github.foohq.foojank.Agent.StartWorkerResponse.factory,0, 0);
+          return _initPointerField(io.github.foohq.foojank.Agent.StartWorkerResponse.factory,2, 0);
         }
         public final boolean isStopWorkerRequest() {
           return which() == Message.Content.Which.STOP_WORKER_REQUEST;
@@ -652,15 +696,15 @@ public final class Agent {
         public final io.github.foohq.foojank.Agent.StopWorkerRequest.Builder getStopWorkerRequest() {
           assert which() == Message.Content.Which.STOP_WORKER_REQUEST:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.StopWorkerRequest.factory, 0, null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.StopWorkerRequest.factory, 2, null, 0);
         }
         public final void setStopWorkerRequest(io.github.foohq.foojank.Agent.StopWorkerRequest.Reader value) {
           _setShortField(0, (short)Message.Content.Which.STOP_WORKER_REQUEST.ordinal());
-          _setPointerField(io.github.foohq.foojank.Agent.StopWorkerRequest.factory,0, value);
+          _setPointerField(io.github.foohq.foojank.Agent.StopWorkerRequest.factory,2, value);
         }
         public final io.github.foohq.foojank.Agent.StopWorkerRequest.Builder initStopWorkerRequest() {
           _setShortField(0, (short)Message.Content.Which.STOP_WORKER_REQUEST.ordinal());
-          return _initPointerField(io.github.foohq.foojank.Agent.StopWorkerRequest.factory,0, 0);
+          return _initPointerField(io.github.foohq.foojank.Agent.StopWorkerRequest.factory,2, 0);
         }
         public final boolean isStopWorkerResponse() {
           return which() == Message.Content.Which.STOP_WORKER_RESPONSE;
@@ -668,15 +712,15 @@ public final class Agent {
         public final io.github.foohq.foojank.Agent.StopWorkerResponse.Builder getStopWorkerResponse() {
           assert which() == Message.Content.Which.STOP_WORKER_RESPONSE:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.StopWorkerResponse.factory, 0, null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.StopWorkerResponse.factory, 2, null, 0);
         }
         public final void setStopWorkerResponse(io.github.foohq.foojank.Agent.StopWorkerResponse.Reader value) {
           _setShortField(0, (short)Message.Content.Which.STOP_WORKER_RESPONSE.ordinal());
-          _setPointerField(io.github.foohq.foojank.Agent.StopWorkerResponse.factory,0, value);
+          _setPointerField(io.github.foohq.foojank.Agent.StopWorkerResponse.factory,2, value);
         }
         public final io.github.foohq.foojank.Agent.StopWorkerResponse.Builder initStopWorkerResponse() {
           _setShortField(0, (short)Message.Content.Which.STOP_WORKER_RESPONSE.ordinal());
-          return _initPointerField(io.github.foohq.foojank.Agent.StopWorkerResponse.factory,0, 0);
+          return _initPointerField(io.github.foohq.foojank.Agent.StopWorkerResponse.factory,2, 0);
         }
         public final boolean isUpdateWorkerStatus() {
           return which() == Message.Content.Which.UPDATE_WORKER_STATUS;
@@ -684,15 +728,15 @@ public final class Agent {
         public final io.github.foohq.foojank.Agent.UpdateWorkerStatus.Builder getUpdateWorkerStatus() {
           assert which() == Message.Content.Which.UPDATE_WORKER_STATUS:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStatus.factory, 0, null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStatus.factory, 2, null, 0);
         }
         public final void setUpdateWorkerStatus(io.github.foohq.foojank.Agent.UpdateWorkerStatus.Reader value) {
           _setShortField(0, (short)Message.Content.Which.UPDATE_WORKER_STATUS.ordinal());
-          _setPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStatus.factory,0, value);
+          _setPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStatus.factory,2, value);
         }
         public final io.github.foohq.foojank.Agent.UpdateWorkerStatus.Builder initUpdateWorkerStatus() {
           _setShortField(0, (short)Message.Content.Which.UPDATE_WORKER_STATUS.ordinal());
-          return _initPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStatus.factory,0, 0);
+          return _initPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStatus.factory,2, 0);
         }
         public final boolean isUpdateWorkerStdio() {
           return which() == Message.Content.Which.UPDATE_WORKER_STDIO;
@@ -700,15 +744,15 @@ public final class Agent {
         public final io.github.foohq.foojank.Agent.UpdateWorkerStdio.Builder getUpdateWorkerStdio() {
           assert which() == Message.Content.Which.UPDATE_WORKER_STDIO:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStdio.factory, 0, null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStdio.factory, 2, null, 0);
         }
         public final void setUpdateWorkerStdio(io.github.foohq.foojank.Agent.UpdateWorkerStdio.Reader value) {
           _setShortField(0, (short)Message.Content.Which.UPDATE_WORKER_STDIO.ordinal());
-          _setPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStdio.factory,0, value);
+          _setPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStdio.factory,2, value);
         }
         public final io.github.foohq.foojank.Agent.UpdateWorkerStdio.Builder initUpdateWorkerStdio() {
           _setShortField(0, (short)Message.Content.Which.UPDATE_WORKER_STDIO.ordinal());
-          return _initPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStdio.factory,0, 0);
+          return _initPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStdio.factory,2, 0);
         }
         public final boolean isUpdateClientInfo() {
           return which() == Message.Content.Which.UPDATE_CLIENT_INFO;
@@ -716,15 +760,15 @@ public final class Agent {
         public final io.github.foohq.foojank.Agent.UpdateClientInfo.Builder getUpdateClientInfo() {
           assert which() == Message.Content.Which.UPDATE_CLIENT_INFO:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.UpdateClientInfo.factory, 0, null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.UpdateClientInfo.factory, 2, null, 0);
         }
         public final void setUpdateClientInfo(io.github.foohq.foojank.Agent.UpdateClientInfo.Reader value) {
           _setShortField(0, (short)Message.Content.Which.UPDATE_CLIENT_INFO.ordinal());
-          _setPointerField(io.github.foohq.foojank.Agent.UpdateClientInfo.factory,0, value);
+          _setPointerField(io.github.foohq.foojank.Agent.UpdateClientInfo.factory,2, value);
         }
         public final io.github.foohq.foojank.Agent.UpdateClientInfo.Builder initUpdateClientInfo() {
           _setShortField(0, (short)Message.Content.Which.UPDATE_CLIENT_INFO.ordinal());
-          return _initPointerField(io.github.foohq.foojank.Agent.UpdateClientInfo.factory,0, 0);
+          return _initPointerField(io.github.foohq.foojank.Agent.UpdateClientInfo.factory,2, 0);
         }
       }
 
@@ -749,84 +793,84 @@ public final class Agent {
           return which() == Message.Content.Which.START_WORKER_REQUEST;
         }
         public boolean hasStartWorkerRequest() {
-          return !_pointerFieldIsNull(0);
+          return !_pointerFieldIsNull(2);
         }
         public io.github.foohq.foojank.Agent.StartWorkerRequest.Reader getStartWorkerRequest() {
           assert which() == Message.Content.Which.START_WORKER_REQUEST:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.StartWorkerRequest.factory,0,null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.StartWorkerRequest.factory,2,null, 0);
         }
 
         public final boolean isStartWorkerResponse() {
           return which() == Message.Content.Which.START_WORKER_RESPONSE;
         }
         public boolean hasStartWorkerResponse() {
-          return !_pointerFieldIsNull(0);
+          return !_pointerFieldIsNull(2);
         }
         public io.github.foohq.foojank.Agent.StartWorkerResponse.Reader getStartWorkerResponse() {
           assert which() == Message.Content.Which.START_WORKER_RESPONSE:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.StartWorkerResponse.factory,0,null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.StartWorkerResponse.factory,2,null, 0);
         }
 
         public final boolean isStopWorkerRequest() {
           return which() == Message.Content.Which.STOP_WORKER_REQUEST;
         }
         public boolean hasStopWorkerRequest() {
-          return !_pointerFieldIsNull(0);
+          return !_pointerFieldIsNull(2);
         }
         public io.github.foohq.foojank.Agent.StopWorkerRequest.Reader getStopWorkerRequest() {
           assert which() == Message.Content.Which.STOP_WORKER_REQUEST:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.StopWorkerRequest.factory,0,null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.StopWorkerRequest.factory,2,null, 0);
         }
 
         public final boolean isStopWorkerResponse() {
           return which() == Message.Content.Which.STOP_WORKER_RESPONSE;
         }
         public boolean hasStopWorkerResponse() {
-          return !_pointerFieldIsNull(0);
+          return !_pointerFieldIsNull(2);
         }
         public io.github.foohq.foojank.Agent.StopWorkerResponse.Reader getStopWorkerResponse() {
           assert which() == Message.Content.Which.STOP_WORKER_RESPONSE:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.StopWorkerResponse.factory,0,null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.StopWorkerResponse.factory,2,null, 0);
         }
 
         public final boolean isUpdateWorkerStatus() {
           return which() == Message.Content.Which.UPDATE_WORKER_STATUS;
         }
         public boolean hasUpdateWorkerStatus() {
-          return !_pointerFieldIsNull(0);
+          return !_pointerFieldIsNull(2);
         }
         public io.github.foohq.foojank.Agent.UpdateWorkerStatus.Reader getUpdateWorkerStatus() {
           assert which() == Message.Content.Which.UPDATE_WORKER_STATUS:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStatus.factory,0,null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStatus.factory,2,null, 0);
         }
 
         public final boolean isUpdateWorkerStdio() {
           return which() == Message.Content.Which.UPDATE_WORKER_STDIO;
         }
         public boolean hasUpdateWorkerStdio() {
-          return !_pointerFieldIsNull(0);
+          return !_pointerFieldIsNull(2);
         }
         public io.github.foohq.foojank.Agent.UpdateWorkerStdio.Reader getUpdateWorkerStdio() {
           assert which() == Message.Content.Which.UPDATE_WORKER_STDIO:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStdio.factory,0,null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.UpdateWorkerStdio.factory,2,null, 0);
         }
 
         public final boolean isUpdateClientInfo() {
           return which() == Message.Content.Which.UPDATE_CLIENT_INFO;
         }
         public boolean hasUpdateClientInfo() {
-          return !_pointerFieldIsNull(0);
+          return !_pointerFieldIsNull(2);
         }
         public io.github.foohq.foojank.Agent.UpdateClientInfo.Reader getUpdateClientInfo() {
           assert which() == Message.Content.Which.UPDATE_CLIENT_INFO:
                       "Must check which() before get()ing a union member.";
-          return _getPointerField(io.github.foohq.foojank.Agent.UpdateClientInfo.factory,0,null, 0);
+          return _getPointerField(io.github.foohq.foojank.Agent.UpdateClientInfo.factory,2,null, 0);
         }
 
       }
@@ -1643,35 +1687,66 @@ public static final org.capnproto.SegmentReader b_d270ea7f372f79cd =
    "\u00cd\u0079\u002f\u0037\u007f\u00ea\u0070\u00d2" +
    "\u000c\u0000\u0000\u0000\u0001\u0000\u0001\u0000" +
    "\u0070\u008b\u00aa\u0036\u005d\u00aa\u00cc\u00dc" +
-   "\u0001\u0000\u0007\u0000\u0000\u0000\u0000\u0000" +
+   "\u0003\u0000\u0007\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0091\u0007\u0000\u0000\u001d\u0009\u0000\u0000" +
+   "\u0091\u0007\u0000\u0000\u004d\u0009\u0000\u0000" +
    "\u0015\u0000\u0000\u0000\u00a2\u0000\u0000\u0000" +
    "\u001d\u0000\u0000\u0000\u0007\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0019\u0000\u0000\u0000\u003f\u0000\u0000\u0000" +
+   "\u0019\u0000\u0000\u0000\u00af\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0061\u0067\u0065\u006e\u0074\u002e\u0063\u0061" +
    "\u0070\u006e\u0070\u003a\u004d\u0065\u0073\u0073" +
    "\u0061\u0067\u0065\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0001\u0000\u0001\u0000" +
-   "\u0004\u0000\u0000\u0000\u0003\u0000\u0004\u0000" +
+   "\u000c\u0000\u0000\u0000\u0003\u0000\u0004\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0045\u0000\u0000\u0000\u0032\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0040\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
+   "\u004c\u0000\u0000\u0000\u0002\u0000\u0001\u0000" +
+   "\u0001\u0000\u0000\u0000\u0001\u0000\u0000\u0000" +
+   "\u0000\u0000\u0001\u0000\u0001\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0049\u0000\u0000\u0000\u0072\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0048\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
+   "\u0054\u0000\u0000\u0000\u0002\u0000\u0001\u0000" +
+   "\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0011\u00aa\u0057\u0019\u00a2\u002f\u0065\u00b4" +
-   "\r\u0000\u0000\u0000\u0042\u0000\u0000\u0000" +
+   "\u00ce\u00a0\u00e2\u002a\u0052\u0054\u0068\u0083" +
+   "\u0051\u0000\u0000\u0000\u0042\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u006d\u0073\u0067\u0049\u0064\u0000\u0000\u0000" +
+   "\u000c\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u000c\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0063\u006f\u0072\u0072\u0065\u006c\u0061\u0074" +
+   "\u0069\u006f\u006e\u0049\u0064\u0000\u0000\u0000" +
+   "\u000c\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u000c\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0063\u006f\u006e\u0074\u0065\u006e\u0074\u0000" + "");
-public static final org.capnproto.SegmentReader b_b4652fa21957aa11 =
+public static final org.capnproto.SegmentReader b_836854522ae2a0ce =
    org.capnproto.GeneratedClassSupport.decodeRawBytes(
    "\u0000\u0000\u0000\u0000\u0006\u0000\u0006\u0000" +
-   "\u0011\u00aa\u0057\u0019\u00a2\u002f\u0065\u00b4" +
+   "\u00ce\u00a0\u00e2\u002a\u0052\u0054\u0068\u0083" +
    "\u0014\u0000\u0000\u0000\u0001\u0000\u0001\u0000" +
    "\u00cd\u0079\u002f\u0037\u007f\u00ea\u0070\u00d2" +
-   "\u0001\u0000\u0007\u0000\u0001\u0000\u0007\u0000" +
+   "\u0003\u0000\u0007\u0000\u0001\u0000\u0007\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0015\u0000\u0000\u0000\u00e2\u0000\u0000\u0000" +
@@ -1685,50 +1760,50 @@ public static final org.capnproto.SegmentReader b_b4652fa21957aa11 =
    "\u0061\u0067\u0065\u002e\u0063\u006f\u006e\u0074" +
    "\u0065\u006e\u0074\u0000\u0000\u0000\u0000\u0000" +
    "\u001c\u0000\u0000\u0000\u0003\u0000\u0004\u0000" +
-   "\u0000\u0000\u00ff\u00ff\u0000\u0000\u0000\u0000" +
-   "\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u00ff\u00ff\u0002\u0000\u0000\u0000" +
+   "\u0000\u0000\u0001\u0000\u0002\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00b5\u0000\u0000\u0000\u009a\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00b8\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
    "\u00c4\u0000\u0000\u0000\u0002\u0000\u0001\u0000" +
-   "\u0001\u0000\u00fe\u00ff\u0000\u0000\u0000\u0000" +
-   "\u0000\u0000\u0001\u0000\u0001\u0000\u0000\u0000" +
+   "\u0001\u0000\u00fe\u00ff\u0002\u0000\u0000\u0000" +
+   "\u0000\u0000\u0001\u0000\u0003\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00c1\u0000\u0000\u0000\u00a2\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00c4\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
    "\u00d0\u0000\u0000\u0000\u0002\u0000\u0001\u0000" +
-   "\u0002\u0000\u00fd\u00ff\u0000\u0000\u0000\u0000" +
-   "\u0000\u0000\u0001\u0000\u0002\u0000\u0000\u0000" +
+   "\u0002\u0000\u00fd\u00ff\u0002\u0000\u0000\u0000" +
+   "\u0000\u0000\u0001\u0000\u0004\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00cd\u0000\u0000\u0000\u0092\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00d0\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
    "\u00dc\u0000\u0000\u0000\u0002\u0000\u0001\u0000" +
-   "\u0003\u0000\u00fc\u00ff\u0000\u0000\u0000\u0000" +
-   "\u0000\u0000\u0001\u0000\u0003\u0000\u0000\u0000" +
+   "\u0003\u0000\u00fc\u00ff\u0002\u0000\u0000\u0000" +
+   "\u0000\u0000\u0001\u0000\u0005\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00d9\u0000\u0000\u0000\u009a\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00dc\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
    "\u00e8\u0000\u0000\u0000\u0002\u0000\u0001\u0000" +
-   "\u0004\u0000\u00fb\u00ff\u0000\u0000\u0000\u0000" +
-   "\u0000\u0000\u0001\u0000\u0004\u0000\u0000\u0000" +
+   "\u0004\u0000\u00fb\u00ff\u0002\u0000\u0000\u0000" +
+   "\u0000\u0000\u0001\u0000\u0006\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00e5\u0000\u0000\u0000\u009a\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00e8\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
    "\u00f4\u0000\u0000\u0000\u0002\u0000\u0001\u0000" +
-   "\u0005\u0000\u00fa\u00ff\u0000\u0000\u0000\u0000" +
-   "\u0000\u0000\u0001\u0000\u0005\u0000\u0000\u0000" +
+   "\u0005\u0000\u00fa\u00ff\u0002\u0000\u0000\u0000" +
+   "\u0000\u0000\u0001\u0000\u0007\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00f1\u0000\u0000\u0000\u0092\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00f4\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
    "\u0000\u0001\u0000\u0000\u0002\u0000\u0001\u0000" +
-   "\u0006\u0000\u00f9\u00ff\u0000\u0000\u0000\u0000" +
-   "\u0000\u0000\u0001\u0000\u0006\u0000\u0000\u0000" +
+   "\u0006\u0000\u00f9\u00ff\u0002\u0000\u0000\u0000" +
+   "\u0000\u0000\u0001\u0000\u0008\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u00fd\u0000\u0000\u0000\u008a\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
