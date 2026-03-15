@@ -7,6 +7,7 @@ This repository contains the [Cap'n Proto](https://capnproto.org/) schema defini
 - `go/`: Go bindings.
 - `java/`: Java bindings.
 - `rust/`: Rust bindings.
+- `cpp/`: C++ bindings.
 
 ## Generate Bindings
 
@@ -133,6 +134,41 @@ fn main() -> capnp::Result<()> {
     // Assuming 'output' is a Write implementation
     serialize_packed::write_message(&mut output, &message)?;
     Ok(())
+}
+```
+
+### C++
+
+The C++ bindings are generated in `cpp/agent.capnp.h` and `cpp/agent.capnp.c++`.
+
+Example usage:
+
+```cpp
+#include <iostream>
+#include <capnp/message.h>
+#include <capnp/serialize-packed.h>
+#include "agent.capnp.h"
+
+int main() {
+    // Assuming 'fd' is an open file descriptor
+    capnp::PackedFdMessageReader message(fd);
+    auto req = message.getRoot<StartWorkerRequest>();
+
+    std::cout << "Command: " << req.getCommand().cStr() << std::endl;
+    auto args = req.getArgs();
+    for (auto arg : args) {
+        std::cout << "Arg: " << arg.cStr() << std::endl;
+    }
+
+    // Example usage (encoding response):
+    capnp::MallocMessageBuilder respMessage;
+    auto resp = respMessage.initRoot<StartWorkerResponse>();
+    resp.setError("Optional error message");
+
+    // Assuming 'output' is a file descriptor
+    capnp::writePackedMessageToFd(output, respMessage);
+
+    return 0;
 }
 ```
 
