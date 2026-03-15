@@ -27,6 +27,7 @@ build() {
         build_schema_go "$schema"
         build_schema_java "$schema"
         build_schema_rust "$schema"
+        build_schema_cpp "$schema"
     done
 }
 
@@ -51,6 +52,12 @@ build_schema_rust() {
     local output_dir="./rust/src"
     mkdir -p "$output_dir"
     capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$CAPNP_JAVA_INCLUDE" -I "$CAPNP_RUST_INCLUDE" -o rust:"$output_dir" "$1"
+}
+
+build_schema_cpp() {
+    local output_dir="./cpp"
+    mkdir -p "$output_dir"
+    capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$CAPNP_JAVA_INCLUDE" -I "$CAPNP_RUST_INCLUDE" -o c++:"$output_dir" "$1"
 }
 
 eval $@
