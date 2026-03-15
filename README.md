@@ -96,13 +96,19 @@ public class Main {
 
 ### Rust
 
-The Rust bindings are generated in `rust/agent/agent_capnp.rs`.
+To use the Rust bindings in your project, add the `foojank` crate as a dependency in your `Cargo.toml`:
+
+```toml
+[dependencies]
+foojank = { git = "https://github.com/foohq/foojank-proto", path = "rust" }
+capnp = "0.25"
+```
 
 Example usage:
 
 ```rust
-use crate::agent_capnp::start_worker_request;
-use crate::agent_capnp::start_worker_response;
+use foojank::agent_capnp::start_worker_request;
+use foojank::agent_capnp::start_worker_response;
 use capnp::message::ReaderOptions;
 use capnp::serialize_packed;
 
