@@ -4,8 +4,9 @@ This repository contains the [Cap'n Proto](https://capnproto.org/) schema defini
 
 **Project Structure**
 
-- `go/`: Generated Go bindings.
-- `java/`: Generated Java bindings.
+- `go/`: Go bindings.
+- `java/`: Java bindings.
+- `rust/`: Rust bindings.
 
 ## Generate Bindings
 
@@ -90,6 +91,42 @@ public class Main {
         // Assuming 'output' is a WritableByteChannel
         org.capnproto.Serialize.write(output, respMessage);
     }
+}
+```
+
+### Rust
+
+The Rust bindings are generated in `rust/agent/agent_capnp.rs`.
+
+Example usage:
+
+```rust
+use crate::agent_capnp::start_worker_request;
+use crate::agent_capnp::start_worker_response;
+use capnp::message::ReaderOptions;
+use capnp::serialize_packed;
+
+fn main() -> capnp::Result<()> {
+    // Assuming 'input' is a Read implementation
+    let message_reader = serialize_packed::read_message(&mut input, ReaderOptions::new())?;
+    let req = message_reader.get_root::<start_worker_request::Reader>()?;
+
+    println!("Command: {}", req.get_command()?.to_str()?);
+    let args = req.get_args()?;
+    for i in 0..args.len() {
+        println!("Arg: {}", args.get(i)?.to_str()?);
+    }
+
+    // Example usage (encoding response):
+    let mut message = capnp::message::Builder::new_default();
+    {
+        let mut resp = message.init_root::<start_worker_response::Builder>();
+        resp.set_error("Optional error message");
+    }
+
+    // Assuming 'output' is a Write implementation
+    serialize_packed::write_message(&mut output, &message)?;
+    Ok(())
 }
 ```
 
