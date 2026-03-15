@@ -2,6 +2,11 @@
 
 This repository contains the [Cap'n Proto](https://capnproto.org/) schema definitions and generated bindings for the `foojank` protocol.
 
+These bindings enable developers to:
+
+- **Integrate custom agents** with the `foojank` framework.
+- **Implement custom clients** to manage and interact with agents.
+
 **Project Structure**
 
 - `go/`: Go bindings.
@@ -171,11 +176,3 @@ int main() {
     return 0;
 }
 ```
-
-## Schema Overview
-
-The `agent.capnp` schema defines the communication protocol for agent management, including:
-
-- Starting/Stopping workers.
-- Handling worker `stdin` and `stdout` streams.
-- Updating worker status and client information.
