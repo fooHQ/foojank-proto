@@ -26,13 +26,6 @@ CAPNP_DECLARE_SCHEMA(af4e3d88746f93bc);
 CAPNP_DECLARE_SCHEMA(ee62811487468816);
 CAPNP_DECLARE_SCHEMA(c795479e88a0bca5);
 CAPNP_DECLARE_SCHEMA(913505385db08e95);
-CAPNP_DECLARE_SCHEMA(8ab8b9cd7c33419c);
-CAPNP_DECLARE_SCHEMA(af6978b488860341);
-CAPNP_DECLARE_SCHEMA(95a4422ee14195cc);
-CAPNP_DECLARE_SCHEMA(935421e67fc873f8);
-CAPNP_DECLARE_SCHEMA(87a8c7e129e5cafc);
-CAPNP_DECLARE_SCHEMA(be807b0aec306242);
-CAPNP_DECLARE_SCHEMA(baf2e41d99bf66a4);
 CAPNP_DECLARE_SCHEMA(9892032ea4e69c6b);
 CAPNP_DECLARE_SCHEMA(c5f4047bf39fa88d);
 CAPNP_DECLARE_SCHEMA(b15c44a86e45d3b0);
@@ -55,13 +48,6 @@ extern const ::capnp::_::ConstText<30> EVT_STOP_WORKER_T;
 extern const ::capnp::_::ConstText<32> EVT_WORKER_STATUS_T;
 extern const ::capnp::_::ConstText<32> EVT_WORKER_STDOUT_T;
 extern const ::capnp::_::ConstText<20> EVT_AGENT_INFO_T;
-extern const ::capnp::_::ConstText<25> START_WORKER_T;
-extern const ::capnp::_::ConstText<24> STOP_WORKER_T;
-extern const ::capnp::_::ConstText<31> WRITE_WORKER_STDIN_T;
-extern const ::capnp::_::ConstText<32> WRITE_WORKER_STDOUT_T;
-extern const ::capnp::_::ConstText<33> UPDATE_WORKER_STATUS_T;
-extern const ::capnp::_::ConstText<28> UPDATE_CLIENT_INFO_T;
-extern const ::capnp::_::ConstText<26> REPLY_MESSAGE_T;
 struct StartWorkerRequest {
   StartWorkerRequest() = delete;
 

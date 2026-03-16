@@ -10,13 +10,6 @@ pub const EVT_STOP_WORKER_T: &str = "FJ.AGENT.%s.EVT.WORKER.%s.STOP";
 pub const EVT_WORKER_STATUS_T: &str = "FJ.AGENT.%s.EVT.WORKER.%s.STATUS";
 pub const EVT_WORKER_STDOUT_T: &str = "FJ.AGENT.%s.EVT.WORKER.%s.STDOUT";
 pub const EVT_AGENT_INFO_T: &str = "FJ.AGENT.%s.EVT.INFO";
-pub const START_WORKER_T: &str = "FJ.API.WORKER.START.%s.%s";
-pub const STOP_WORKER_T: &str = "FJ.API.WORKER.STOP.%s.%s";
-pub const WRITE_WORKER_STDIN_T: &str = "FJ.API.WORKER.WRITE.STDIN.%s.%s";
-pub const WRITE_WORKER_STDOUT_T: &str = "FJ.API.WORKER.WRITE.STDOUT.%s.%s";
-pub const UPDATE_WORKER_STATUS_T: &str = "FJ.API.WORKER.UPDATE.STATUS.%s.%s";
-pub const UPDATE_CLIENT_INFO_T: &str = "FJ.API.CLIENT.UPDATE.INFO.%s";
-pub const REPLY_MESSAGE_T: &str = "FJ.API.MESSAGE.REPLY.%s.%s";
 
 pub mod start_worker_request {
   #[derive(Copy, Clone)]
@@ -223,7 +216,7 @@ pub mod start_worker_request {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(3, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(203, 5, 0, 0, 47, 6, 0, 0),
+      ::capnp::word(253, 2, 0, 0, 97, 3, 0, 0),
       ::capnp::word(21, 0, 0, 0, 250, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -472,7 +465,7 @@ pub mod start_worker_response {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(1, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(49, 6, 0, 0, 99, 6, 0, 0),
+      ::capnp::word(99, 3, 0, 0, 149, 3, 0, 0),
       ::capnp::word(21, 0, 0, 0, 2, 1, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -657,7 +650,7 @@ pub mod stop_worker_request {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(0, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(101, 6, 0, 0, 128, 6, 0, 0),
+      ::capnp::word(151, 3, 0, 0, 178, 3, 0, 0),
       ::capnp::word(21, 0, 0, 0, 242, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -847,7 +840,7 @@ pub mod stop_worker_response {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(1, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(130, 6, 0, 0, 179, 6, 0, 0),
+      ::capnp::word(180, 3, 0, 0, 229, 3, 0, 0),
       ::capnp::word(21, 0, 0, 0, 250, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -1044,7 +1037,7 @@ pub mod update_worker_status {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(0, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(181, 6, 0, 0, 232, 6, 0, 0),
+      ::capnp::word(231, 3, 0, 0, 26, 4, 0, 0),
       ::capnp::word(21, 0, 0, 0, 250, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -1253,7 +1246,7 @@ pub mod update_worker_stdio {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(1, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(234, 6, 0, 0, 25, 7, 0, 0),
+      ::capnp::word(28, 4, 0, 0, 75, 4, 0, 0),
       ::capnp::word(21, 0, 0, 0, 242, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -1534,7 +1527,7 @@ pub mod update_client_info {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(4, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(27, 7, 0, 0, 143, 7, 0, 0),
+      ::capnp::word(77, 4, 0, 0, 193, 4, 0, 0),
       ::capnp::word(21, 0, 0, 0, 234, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -1786,7 +1779,7 @@ pub mod message {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(1, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(145, 7, 0, 0, 29, 9, 0, 0),
+      ::capnp::word(195, 4, 0, 0, 79, 6, 0, 0),
       ::capnp::word(21, 0, 0, 0, 162, 0, 0, 0),
       ::capnp::word(29, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
