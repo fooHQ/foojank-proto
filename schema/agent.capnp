@@ -18,21 +18,6 @@ const evtWorkerStatusT :Text = "FJ.AGENT.%s.EVT.WORKER.%s.STATUS";
 const evtWorkerStdoutT :Text = "FJ.AGENT.%s.EVT.WORKER.%s.STDOUT";
 const evtAgentInfoT    :Text = "FJ.AGENT.%s.EVT.INFO";
 
-# Deprecated: use cmdStartWorkerT
-const startWorkerT :Text = "FJ.API.WORKER.START.%s.%s";
-# Deprecated: use cmdStopWorkerT
-const stopWorkerT :Text = "FJ.API.WORKER.STOP.%s.%s";
-# Deprecated: use cmdWriteStdinT
-const writeWorkerStdinT :Text = "FJ.API.WORKER.WRITE.STDIN.%s.%s";
-# Deprecated: use evtWorkerStdoutT
-const writeWorkerStdoutT :Text = "FJ.API.WORKER.WRITE.STDOUT.%s.%s";
-# Deprecated: use evtWorkerStatusT
-const updateWorkerStatusT :Text = "FJ.API.WORKER.UPDATE.STATUS.%s.%s";
-# Deprecated: use evtAgentInfoT
-const updateClientInfoT :Text = "FJ.API.CLIENT.UPDATE.INFO.%s";
-# Deprecated: use evtStartWorkerT or evtStopWorkerT with cmdSeq correlation
-const replyMessageT :Text = "FJ.API.MESSAGE.REPLY.%s.%s";
-
 struct StartWorkerRequest {
     command @0 :Text;
     args @1 :List(Text);
