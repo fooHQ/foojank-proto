@@ -2,8 +2,7 @@
 
 set -euo pipefail
 
-CAPNP_JAVA_INCLUDE="$(nix path-info nixpkgs#capnproto-java)/include"
-CAPNP_RUST_INCLUDE="$(nix path-info nixpkgs#capnproto-rust)/include"
+DEVBOX_INCLUDE=".devbox/nix/profile/default/include"
 
 install() {
     install_capnproto_go
@@ -34,7 +33,7 @@ build() {
 build_schema_go() {
     local output_dir="./go/$(basename "$1" ".capnp")"
     mkdir -p "$output_dir"
-    capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$CAPNP_JAVA_INCLUDE" -I "$CAPNP_RUST_INCLUDE" -o ./build/capnpc-go:"$output_dir" "$1"
+    capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$DEVBOX_INCLUDE" -o ./build/capnpc-go:"$output_dir" "$1"
 
     local module_path="$(grep '\$Go\.import' "$1" | awk -F'"' '{print $2}')"
     rm -f "$output_dir/go.mod" "$output_dir/go.sum"
@@ -45,19 +44,19 @@ build_schema_go() {
 build_schema_java() {
     local output_dir="./java/io/github/foohq/foojank/$(basename "$1" ".capnp")"
     mkdir -p "$output_dir"
-    capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$CAPNP_JAVA_INCLUDE" -I "$CAPNP_RUST_INCLUDE" -o java:"$output_dir" "$1"
+    capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$DEVBOX_INCLUDE" -o java:"$output_dir" "$1"
 }
 
 build_schema_rust() {
     local output_dir="./rust/src"
     mkdir -p "$output_dir"
-    capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$CAPNP_JAVA_INCLUDE" -I "$CAPNP_RUST_INCLUDE" -o rust:"$output_dir" "$1"
+    capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$DEVBOX_INCLUDE" -o rust:"$output_dir" "$1"
 }
 
 build_schema_cpp() {
     local output_dir="./cpp"
     mkdir -p "$output_dir"
-    capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$CAPNP_JAVA_INCLUDE" -I "$CAPNP_RUST_INCLUDE" -o c++:"$output_dir" "$1"
+    capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$DEVBOX_INCLUDE" -o c++:"$output_dir" "$1"
 }
 
 eval $@
