@@ -70,6 +70,8 @@ struct StopWorkerResponse {
 struct UpdateWorkerStatus {
     # status is the exit code of the worker process, or other status indicators.
     status @0 :Int64;
+    # error contains a description of the error if the worker failed, or an empty string on success.
+    error @1 :Text;
 }
 
 # UpdateWorkerStdio is sent by a client when writing to a worker's stdin and by an agent when streaming stdout.
