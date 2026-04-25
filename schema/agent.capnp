@@ -13,6 +13,7 @@ $Java.outerClassname("Agent");
 const exitSuccess         :Int64 = 0;
 const exitFailure         :Int64 = 1;
 const exitCommandNotFound :Int64 = 127;
+const exitInterrupted     :Int64 = 130;
 
 # cmdStartWorkerT is the NATS topic used to send start worker commands to an agent.
 # The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
