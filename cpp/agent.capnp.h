@@ -124,7 +124,7 @@ struct UpdateWorkerStatus {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(a62a70011c9fd5df, 1, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(a62a70011c9fd5df, 1, 1)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -558,6 +558,9 @@ public:
 
   inline  ::int64_t getStatus() const;
 
+  inline bool hasError() const;
+  inline  ::capnp::Text::Reader getError() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -588,6 +591,13 @@ public:
 
   inline  ::int64_t getStatus();
   inline void setStatus( ::int64_t value);
+
+  inline bool hasError();
+  inline  ::capnp::Text::Builder getError();
+  inline void setError( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initError(unsigned int size);
+  inline void adoptError(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownError();
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -1233,6 +1243,40 @@ inline  ::int64_t UpdateWorkerStatus::Builder::getStatus() {
 inline void UpdateWorkerStatus::Builder::setStatus( ::int64_t value) {
   _builder.setDataField< ::int64_t>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool UpdateWorkerStatus::Reader::hasError() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool UpdateWorkerStatus::Builder::hasError() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader UpdateWorkerStatus::Reader::getError() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder UpdateWorkerStatus::Builder::getError() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void UpdateWorkerStatus::Builder::setError( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder UpdateWorkerStatus::Builder::initError(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void UpdateWorkerStatus::Builder::adoptError(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> UpdateWorkerStatus::Builder::disownError() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
 }
 
 inline bool UpdateWorkerStdio::Reader::hasData() const {

@@ -281,7 +281,7 @@ public final class Agent {
 
 
   public static class UpdateWorkerStatus {
-    public static final org.capnproto.StructSize STRUCT_SIZE = new org.capnproto.StructSize((short)1,(short)0);
+    public static final org.capnproto.StructSize STRUCT_SIZE = new org.capnproto.StructSize((short)1,(short)1);
     public static final class Factory extends org.capnproto.StructFactory<Builder, Reader> {
       public Factory() {
       }
@@ -315,6 +315,21 @@ public final class Agent {
         _setLongField(0, value);
       }
 
+      public final boolean hasError() {
+        return !_pointerFieldIsNull(0);
+      }
+      public final org.capnproto.Text.Builder getError() {
+        return _getPointerField(org.capnproto.Text.factory, 0, null, 0, 0);
+      }
+      public final void setError(org.capnproto.Text.Reader value) {
+        _setPointerField(org.capnproto.Text.factory, 0, value);
+      }
+      public final void setError(String value) {
+        _setPointerField(org.capnproto.Text.factory, 0, new org.capnproto.Text.Reader(value));
+      }
+      public final org.capnproto.Text.Builder initError(int size) {
+        return _initPointerField(org.capnproto.Text.factory, 0, size);
+      }
     }
 
     public static final class Reader extends org.capnproto.StructReader {
@@ -324,6 +339,13 @@ public final class Agent {
 
       public final long getStatus() {
         return _getLongField(0);
+      }
+
+      public boolean hasError() {
+        return !_pointerFieldIsNull(0);
+      }
+      public org.capnproto.Text.Reader getError() {
+        return _getPointerField(org.capnproto.Text.factory, 0, null, 0, 0);
       }
 
     }
@@ -1373,13 +1395,13 @@ public static final org.capnproto.SegmentReader b_a62a70011c9fd5df =
    "\u00df\u00d5\u009f\u001c\u0001\u0070\u002a\u00a6" +
    "\u000c\u0000\u0000\u0000\u0001\u0000\u0001\u0000" +
    "\u0070\u008b\u00aa\u0036\u005d\u00aa\u00cc\u00dc" +
-   "\u0000\u0000\u0007\u0000\u0000\u0000\u0000\u0000" +
+   "\u0001\u0000\u0007\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0018\r\u0000\u0000\u009c\r\u0000\u0000" +
+   "\u0018\r\u0000\u0000\u0015\u000e\u0000\u0000" +
    "\u0015\u0000\u0000\u0000\u00fa\u0000\u0000\u0000" +
    "\u0021\u0000\u0000\u0000\u0007\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u001d\u0000\u0000\u0000\u003f\u0000\u0000\u0000" +
+   "\u001d\u0000\u0000\u0000\u0077\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0061\u0067\u0065\u006e\u0074\u002e\u0063\u0061" +
@@ -1387,20 +1409,35 @@ public static final org.capnproto.SegmentReader b_a62a70011c9fd5df =
    "\u0074\u0065\u0057\u006f\u0072\u006b\u0065\u0072" +
    "\u0053\u0074\u0061\u0074\u0075\u0073\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0001\u0000\u0001\u0000" +
-   "\u0004\u0000\u0000\u0000\u0003\u0000\u0004\u0000" +
+   "\u0008\u0000\u0000\u0000\u0003\u0000\u0004\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\r\u0000\u0000\u0000\u003a\u0000\u0000\u0000" +
+   "\u0029\u0000\u0000\u0000\u003a\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0008\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
-   "\u0014\u0000\u0000\u0000\u0002\u0000\u0001\u0000" +
+   "\u0024\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
+   "\u0030\u0000\u0000\u0000\u0002\u0000\u0001\u0000" +
+   "\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0001\u0000\u0001\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u002d\u0000\u0000\u0000\u0032\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0028\u0000\u0000\u0000\u0003\u0000\u0001\u0000" +
+   "\u0034\u0000\u0000\u0000\u0002\u0000\u0001\u0000" +
    "\u0073\u0074\u0061\u0074\u0075\u0073\u0000\u0000" +
    "\u0005\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0005\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0065\u0072\u0072\u006f\u0072\u0000\u0000\u0000" +
+   "\u000c\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
+   "\u000c\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" + "");
 public static final org.capnproto.SegmentReader b_a76a3a9604a9e962 =
@@ -1411,7 +1448,7 @@ public static final org.capnproto.SegmentReader b_a76a3a9604a9e962 =
    "\u0070\u008b\u00aa\u0036\u005d\u00aa\u00cc\u00dc" +
    "\u0001\u0000\u0007\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u000e\u000e\u0000\u0000\u0059\u000e\u0000\u0000" +
+   "\u0087\u000e\u0000\u0000\u00d2\u000e\u0000\u0000" +
    "\u0015\u0000\u0000\u0000\u00f2\u0000\u0000\u0000" +
    "\u0021\u0000\u0000\u0000\u0007\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
@@ -1447,7 +1484,7 @@ public static final org.capnproto.SegmentReader b_a073b10fb899cbb0 =
    "\u0070\u008b\u00aa\u0036\u005d\u00aa\u00cc\u00dc" +
    "\u0004\u0000\u0007\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u00a2\u000e\u0000\u0000\u0016\u0010\u0000\u0000" +
+   "\u001b\u000f\u0000\u0000\u008f\u0010\u0000\u0000" +
    "\u0015\u0000\u0000\u0000\u00ea\u0000\u0000\u0000" +
    "\u0021\u0000\u0000\u0000\u0007\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
@@ -1530,7 +1567,7 @@ public static final org.capnproto.SegmentReader b_d270ea7f372f79cd =
    "\u0070\u008b\u00aa\u0036\u005d\u00aa\u00cc\u00dc" +
    "\u0001\u0000\u0007\u0000\u0000\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
-   "\u0056\u0010\u0000\u0000\u00e2\u0011\u0000\u0000" +
+   "\u00cf\u0010\u0000\u0000\u005b\u0012\u0000\u0000" +
    "\u0015\u0000\u0000\u0000\u00a2\u0000\u0000\u0000" +
    "\u001d\u0000\u0000\u0000\u0007\u0000\u0000\u0000" +
    "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
