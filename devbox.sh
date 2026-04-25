@@ -34,11 +34,6 @@ build_schema_go() {
     local output_dir="./go/$(basename "$1" ".capnp")"
     mkdir -p "$output_dir"
     capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$DEVBOX_INCLUDE" -o ./build/capnpc-go:"$output_dir" "$1"
-
-    local module_path="$(grep '\$Go\.import' "$1" | awk -F'"' '{print $2}')"
-    rm -f "$output_dir/go.mod" "$output_dir/go.sum"
-    go -C "$output_dir" mod init "$module_path"
-    go -C "$output_dir" mod tidy
 }
 
 build_schema_java() {
