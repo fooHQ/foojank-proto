@@ -8,6 +8,12 @@ using Java = import "/capnp/java.capnp";
 $Java.package("io.github.foohq.foojank");
 $Java.outerClassname("Agent");
 
+# Worker exit codes.
+# Exit code is sent by a worker in UpdateWorkerStatus.
+const exitSuccess         :Int64 = 0;
+const exitFailure         :Int64 = 1;
+const exitCommandNotFound :Int64 = 127;
+
 # cmdStartWorkerT is the NATS topic used to send start worker commands to an agent.
 # The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
 const cmdStartWorkerT  :Text = "FJ.AGENT.%s.CMD.WORKER.%s.START";
