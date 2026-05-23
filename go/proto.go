@@ -1,5 +1,4 @@
-// Package proto provides functions for marshaling and unmarshaling messages
-// and generating NATS subjects for communication.
+// Package proto provides functions for marshaling and unmarshaling messages.
 package proto
 
 import (
@@ -14,61 +13,104 @@ var (
 	ErrUnknownMessage = errors.New("unknown message")
 )
 
-// Marshal serializes the given data into a byte slice.
-// It supports various request and response types defined in the proto package.
-func Marshal(data any) ([]byte, error) {
-	switch v := data.(type) {
-	case StartWorkerRequest:
-		return marshalStartWorkerRequest(v)
-	case StartWorkerResponse:
-		return marshalStartWorkerResponse(v)
-	case StopWorkerRequest:
-		return marshalStopWorkerRequest(v)
-	case StopWorkerResponse:
-		return marshalStopWorkerResponse(v)
-	case UpdateWorkerStatus:
-		return marshalUpdateWorkerStatus(v)
-	case UpdateWorkerStdio:
-		return marshalUpdateWorkerStdio(v)
-	case UpdateClientInfo:
-		return marshalUpdateClientInfo(v)
-	}
-	return nil, ErrUnknownMessage
+type Envelope struct {
+	Subject string
+	Payload any
 }
 
-// Unmarshal deserializes the given byte slice into a message object.
-// It returns an interface{} which can be type-asserted to the specific message type.
-func Unmarshal(b []byte) (any, error) {
-	message, err := parseMessage(b)
+// Marshal serializes the given data into a byte slice.
+// It supports various request and response types defined in the proto package.
+func Marshal(envelope Envelope) ([]byte, error) {
+	env, err := newEnvelope()
 	if err != nil {
 		return nil, err
 	}
 
-	content := message.Content()
-	switch {
-	case content.HasStartWorkerRequest():
-		return unmarshalStartWorkerRequest(message)
-
-	case content.HasStartWorkerResponse():
-		return unmarshalStartWorkerResponse(message)
-
-	case content.HasStopWorkerRequest():
-		return unmarshalStopWorkerRequest(message)
-
-	case content.HasStopWorkerResponse():
-		return unmarshalStopWorkerResponse(message)
-
-	case content.HasUpdateWorkerStatus():
-		return unmarshalUpdateWorkerStatus(message)
-
-	case content.HasUpdateWorkerStdio():
-		return unmarshalUpdateWorkerStdio(message)
-
-	case content.HasUpdateClientInfo():
-		return unmarshalUpdateClientInfo(message)
+	err = env.SetSubject(envelope.Subject)
+	if err != nil {
+		return nil, err
 	}
 
-	return nil, ErrUnknownMessage
+	payload, err := env.NewPayload()
+	if err != nil {
+		return nil, err
+	}
+
+	switch v := envelope.Payload.(type) {
+	case StartWorkerRequest:
+		err = marshalStartWorkerRequest(&payload, v)
+	case StartWorkerResponse:
+		err = marshalStartWorkerResponse(&payload, v)
+	case StopWorkerRequest:
+		err = marshalStopWorkerRequest(&payload, v)
+	case StopWorkerResponse:
+		err = marshalStopWorkerResponse(&payload, v)
+	case UpdateWorkerStatus:
+		err = marshalUpdateWorkerStatus(&payload, v)
+	case UpdateWorkerStdio:
+		err = marshalUpdateWorkerStdio(&payload, v)
+	case UpdateClientInfo:
+		err = marshalUpdateClientInfo(&payload, v)
+	default:
+		err = ErrUnknownMessage
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	err = env.SetPayload(payload)
+	if err != nil {
+		return nil, err
+	}
+
+	return env.Message().Marshal()
+}
+
+// Unmarshal deserializes the given byte slice into a message object.
+// It returns an interface{} which can be type-asserted to the specific message type.
+func Unmarshal(b []byte) (Envelope, error) {
+	envelope, err := unmarshalEnvelope(b)
+	if err != nil {
+		return Envelope{}, err
+	}
+
+	subject, err := envelope.Subject()
+	if err != nil {
+		return Envelope{}, err
+	}
+
+	payload, err := envelope.Payload()
+	if err != nil {
+		return Envelope{}, err
+	}
+
+	var v any
+	switch {
+	case payload.Content().HasStartWorkerRequest():
+		v, err = unmarshalStartWorkerRequest(&payload)
+	case payload.Content().HasStartWorkerResponse():
+		v, err = unmarshalStartWorkerResponse(&payload)
+	case payload.Content().HasStopWorkerRequest():
+		v, err = unmarshalStopWorkerRequest(&payload)
+	case payload.Content().HasStopWorkerResponse():
+		v, err = unmarshalStopWorkerResponse(&payload)
+	case payload.Content().HasUpdateWorkerStatus():
+		v, err = unmarshalUpdateWorkerStatus(&payload)
+	case payload.Content().HasUpdateWorkerStdio():
+		v, err = unmarshalUpdateWorkerStdio(&payload)
+	case payload.Content().HasUpdateClientInfo():
+		v, err = unmarshalUpdateClientInfo(&payload)
+	default:
+		err = ErrUnknownMessage
+	}
+	if err != nil {
+		return Envelope{}, err
+	}
+
+	return Envelope{
+		Subject: subject,
+		Payload: v,
+	}, nil
 }
 
 // CmdStartWorkerSubject returns the NATS subject for sending a start worker command to an agent.
@@ -132,19 +174,19 @@ func replaceStringPlaceholders(s string, values ...string) string {
 	return result
 }
 
-func newMessage() (capnp.Message, error) {
+func newEnvelope() (capnp.Envelope, error) {
 	arena := capnplib.SingleSegment(nil)
 	_, seg, err := capnplib.NewMessage(arena)
 	if err != nil {
-		return capnp.Message{}, err
+		return capnp.Envelope{}, err
 	}
 
-	msg, err := capnp.NewRootMessage(seg)
+	envelope, err := capnp.NewRootEnvelope(seg)
 	if err != nil {
-		return capnp.Message{}, err
+		return capnp.Envelope{}, err
 	}
 
-	return msg, nil
+	return envelope, nil
 }
 
 func newTextList(segment *capnplib.Segment, ss []string) (capnplib.TextList, error) {
@@ -163,18 +205,18 @@ func newTextList(segment *capnplib.Segment, ss []string) (capnplib.TextList, err
 	return tl, nil
 }
 
-func parseMessage(b []byte) (capnp.Message, error) {
+func unmarshalEnvelope(b []byte) (capnp.Envelope, error) {
 	capMsg, err := capnplib.Unmarshal(b)
 	if err != nil {
-		return capnp.Message{}, err
+		return capnp.Envelope{}, err
 	}
 
-	message, err := capnp.ReadRootMessage(capMsg)
+	envelope, err := capnp.ReadRootEnvelope(capMsg)
 	if err != nil {
-		return capnp.Message{}, err
+		return capnp.Envelope{}, err
 	}
 
-	return message, nil
+	return envelope, nil
 }
 
 func textListToStringSlice(list capnplib.TextList) ([]string, error) {

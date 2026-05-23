@@ -1,6 +1,8 @@
 package proto
 
-import capnp "github.com/foohq/foojank-proto/go/agent"
+import (
+	capnp "github.com/foohq/foojank-proto/go/agent"
+)
 
 // UpdateClientInfo contains information about a client.
 type UpdateClientInfo struct {
@@ -10,46 +12,41 @@ type UpdateClientInfo struct {
 	Address  string
 }
 
-func marshalUpdateClientInfo(data UpdateClientInfo) ([]byte, error) {
-	msg, err := newMessage()
+func marshalUpdateClientInfo(message *capnp.Message, data UpdateClientInfo) error {
+	m, err := capnp.NewUpdateClientInfo(message.Segment())
 	if err != nil {
-		return nil, err
-	}
-
-	m, err := capnp.NewUpdateClientInfo(msg.Segment())
-	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = m.SetUsername(data.Username)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = m.SetHostname(data.Hostname)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = m.SetSystem(data.System)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = m.SetAddress(data.Address)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	err = msg.Content().SetUpdateClientInfo(m)
+	err = message.Content().SetUpdateClientInfo(m)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return msg.Message().Marshal()
+	return nil
 }
 
-func unmarshalUpdateClientInfo(message capnp.Message) (UpdateClientInfo, error) {
+func unmarshalUpdateClientInfo(message *capnp.Message) (UpdateClientInfo, error) {
 	v, err := message.Content().UpdateClientInfo()
 	if err != nil {
 		return UpdateClientInfo{}, err

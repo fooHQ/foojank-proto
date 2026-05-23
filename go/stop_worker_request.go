@@ -1,30 +1,27 @@
 package proto
 
-import capnp "github.com/foohq/foojank-proto/go/agent"
+import (
+	capnp "github.com/foohq/foojank-proto/go/agent"
+)
 
 // StopWorkerRequest is a request to stop a running worker.
 type StopWorkerRequest struct{}
 
-func marshalStopWorkerRequest(_ StopWorkerRequest) ([]byte, error) {
-	msg, err := newMessage()
+func marshalStopWorkerRequest(message *capnp.Message, _ StopWorkerRequest) error {
+	m, err := capnp.NewStopWorkerRequest(message.Segment())
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	m, err := capnp.NewStopWorkerRequest(msg.Segment())
+	err = message.Content().SetStopWorkerRequest(m)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	err = msg.Content().SetStopWorkerRequest(m)
-	if err != nil {
-		return nil, err
-	}
-
-	return msg.Message().Marshal()
+	return nil
 }
 
-func unmarshalStopWorkerRequest(message capnp.Message) (StopWorkerRequest, error) {
+func unmarshalStopWorkerRequest(message *capnp.Message) (StopWorkerRequest, error) {
 	_, err := message.Content().StopWorkerRequest()
 	if err != nil {
 		return StopWorkerRequest{}, err

@@ -1,37 +1,34 @@
 package proto
 
-import capnp "github.com/foohq/foojank-proto/go/agent"
+import (
+	capnp "github.com/foohq/foojank-proto/go/agent"
+)
 
 // UpdateWorkerStdio contains data from a worker's stdout or stdin.
 type UpdateWorkerStdio struct {
 	Data []byte
 }
 
-func marshalUpdateWorkerStdio(data UpdateWorkerStdio) ([]byte, error) {
-	msg, err := newMessage()
+func marshalUpdateWorkerStdio(message *capnp.Message, data UpdateWorkerStdio) error {
+	m, err := capnp.NewUpdateWorkerStdio(message.Segment())
 	if err != nil {
-		return nil, err
-	}
-
-	m, err := capnp.NewUpdateWorkerStdio(msg.Segment())
-	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = m.SetData(data.Data)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	err = msg.Content().SetUpdateWorkerStdio(m)
+	err = message.Content().SetUpdateWorkerStdio(m)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return msg.Message().Marshal()
+	return nil
 }
 
-func unmarshalUpdateWorkerStdio(message capnp.Message) (UpdateWorkerStdio, error) {
+func unmarshalUpdateWorkerStdio(message *capnp.Message) (UpdateWorkerStdio, error) {
 	v, err := message.Content().UpdateWorkerStdio()
 	if err != nil {
 		return UpdateWorkerStdio{}, err
