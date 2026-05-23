@@ -15,29 +15,29 @@ const exitFailure         :Int64 = 1;
 const exitCommandNotFound :Int64 = 127;
 const exitInterrupted     :Int64 = 130;
 
-# cmdStartWorkerT is the NATS topic used to send start worker commands to an agent.
+# cmdStartWorkerT is a message subject used to send start worker commands to an agent.
 # The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
 const cmdStartWorkerT  :Text = "FJ.AGENT.%s.CMD.WORKER.%s.START";
-# cmdStopWorkerT is the NATS topic used to send stop worker commands to an agent.
+# cmdStopWorkerT is a message subject used to send stop worker commands to an agent.
 # The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
 const cmdStopWorkerT   :Text = "FJ.AGENT.%s.CMD.WORKER.%s.STOP";
-# cmdWriteStdinT is the NATS topic used to send stdin data to a worker process.
+# cmdWriteStdinT is a message subject used to send stdin data to a worker process.
 # The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
 const cmdWriteStdinT   :Text = "FJ.AGENT.%s.CMD.WORKER.%s.STDIN";
 
-# evtStartWorkerT is the NATS topic where worker start events are published.
+# evtStartWorkerT is a message subject where worker start events are published.
 # The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
 const evtStartWorkerT  :Text = "FJ.AGENT.%s.EVT.WORKER.%s.START";
-# evtStopWorkerT is the NATS topic where worker stop events are published.
+# evtStopWorkerT is a message subject where worker stop events are published.
 # The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
 const evtStopWorkerT   :Text = "FJ.AGENT.%s.EVT.WORKER.%s.STOP";
-# evtWorkerStatusT is the NATS topic where worker status updates are published.
+# evtWorkerStatusT is a message subject where worker status updates are published.
 # The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
 const evtWorkerStatusT :Text = "FJ.AGENT.%s.EVT.WORKER.%s.STATUS";
-# evtWorkerStdoutT is the NATS topic where worker stdout data is published.
+# evtWorkerStdoutT is a message subject where worker stdout data is published.
 # The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
 const evtWorkerStdoutT :Text = "FJ.AGENT.%s.EVT.WORKER.%s.STDOUT";
-# evtAgentInfoT is the NATS topic where agent identification info is published.
+# evtAgentInfoT is a message subject where agent identification info is published.
 # The "%s" placeholder must be replaced with the agent ID.
 const evtAgentInfoT    :Text = "FJ.AGENT.%s.EVT.INFO";
 
@@ -92,7 +92,7 @@ struct UpdateClientInfo {
     address @3 :Text;
 }
 
-# Message is a top-level container for all protocol messages.
+# Message is a container for all protocol messages.
 struct Message {
     content :union {
         startWorkerRequest @0 :StartWorkerRequest;
@@ -103,4 +103,10 @@ struct Message {
         updateWorkerStdio @5 :UpdateWorkerStdio;
         updateClientInfo @6 :UpdateClientInfo;
     }
+}
+
+# Envelope is a top-level container for all protocol messages.
+struct Envelope {
+    subject @0 :Text;
+    payload @1 :Message;
 }
