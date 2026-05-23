@@ -39,6 +39,7 @@ CAPNP_DECLARE_SCHEMA(a76a3a9604a9e962);
 CAPNP_DECLARE_SCHEMA(a073b10fb899cbb0);
 CAPNP_DECLARE_SCHEMA(d270ea7f372f79cd);
 CAPNP_DECLARE_SCHEMA(b4652fa21957aa11);
+CAPNP_DECLARE_SCHEMA(f1d5f83d96db2344);
 
 }  // namespace schemas
 }  // namespace capnp
@@ -195,6 +196,21 @@ struct Message::Content {
 
   struct _capnpPrivate {
     CAPNP_DECLARE_STRUCT_HEADER(b4652fa21957aa11, 1, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct Envelope {
+  Envelope() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(f1d5f83d96db2344, 0, 2)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -1051,6 +1067,98 @@ private:
 };
 #endif  // !CAPNP_LITE
 
+class Envelope::Reader {
+public:
+  typedef Envelope Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasSubject() const;
+  inline  ::capnp::Text::Reader getSubject() const;
+
+  inline bool hasPayload() const;
+  inline  ::Message::Reader getPayload() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class Envelope::Builder {
+public:
+  typedef Envelope Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasSubject();
+  inline  ::capnp::Text::Builder getSubject();
+  inline void setSubject( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initSubject(unsigned int size);
+  inline void adoptSubject(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownSubject();
+
+  inline bool hasPayload();
+  inline  ::Message::Builder getPayload();
+  inline void setPayload( ::Message::Reader value);
+  inline  ::Message::Builder initPayload();
+  inline void adoptPayload(::capnp::Orphan< ::Message>&& value);
+  inline ::capnp::Orphan< ::Message> disownPayload();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class Envelope::Pipeline {
+public:
+  typedef Envelope Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline  ::Message::Pipeline getPayload();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
 // =======================================================================================
 
 inline bool StartWorkerRequest::Reader::hasCommand() const {
@@ -1850,6 +1958,79 @@ inline ::capnp::Orphan< ::UpdateClientInfo> Message::Content::Builder::disownUpd
               "Must check which() before get()ing a union member.");
   return ::capnp::_::PointerHelpers< ::UpdateClientInfo>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool Envelope::Reader::hasSubject() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool Envelope::Builder::hasSubject() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader Envelope::Reader::getSubject() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder Envelope::Builder::getSubject() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void Envelope::Builder::setSubject( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder Envelope::Builder::initSubject(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void Envelope::Builder::adoptSubject(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> Envelope::Builder::disownSubject() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool Envelope::Reader::hasPayload() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool Envelope::Builder::hasPayload() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::Message::Reader Envelope::Reader::getPayload() const {
+  return ::capnp::_::PointerHelpers< ::Message>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::Message::Builder Envelope::Builder::getPayload() {
+  return ::capnp::_::PointerHelpers< ::Message>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+#if !CAPNP_LITE
+inline  ::Message::Pipeline Envelope::Pipeline::getPayload() {
+  return  ::Message::Pipeline(_typeless.getPointerField(1));
+}
+#endif  // !CAPNP_LITE
+inline void Envelope::Builder::setPayload( ::Message::Reader value) {
+  ::capnp::_::PointerHelpers< ::Message>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::Message::Builder Envelope::Builder::initPayload() {
+  return ::capnp::_::PointerHelpers< ::Message>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void Envelope::Builder::adoptPayload(
+    ::capnp::Orphan< ::Message>&& value) {
+  ::capnp::_::PointerHelpers< ::Message>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::Message> Envelope::Builder::disownPayload() {
+  return ::capnp::_::PointerHelpers< ::Message>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
 
