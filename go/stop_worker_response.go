@@ -11,33 +11,28 @@ type StopWorkerResponse struct {
 	Error error
 }
 
-func marshalStopWorkerResponse(data StopWorkerResponse) ([]byte, error) {
-	msg, err := newMessage()
+func marshalStopWorkerResponse(message *capnp.Message, data StopWorkerResponse) error {
+	m, err := capnp.NewStopWorkerResponse(message.Segment())
 	if err != nil {
-		return nil, err
-	}
-
-	m, err := capnp.NewStopWorkerResponse(msg.Segment())
-	if err != nil {
-		return nil, err
+		return err
 	}
 
 	if data.Error != nil {
 		err = m.SetError(data.Error.Error())
 		if err != nil {
-			return nil, err
+			return err
 		}
 	}
 
-	err = msg.Content().SetStopWorkerResponse(m)
+	err = message.Content().SetStopWorkerResponse(m)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return msg.Message().Marshal()
+	return nil
 }
 
-func unmarshalStopWorkerResponse(message capnp.Message) (StopWorkerResponse, error) {
+func unmarshalStopWorkerResponse(message *capnp.Message) (StopWorkerResponse, error) {
 	v, err := message.Content().StopWorkerResponse()
 	if err != nil {
 		return StopWorkerResponse{}, err

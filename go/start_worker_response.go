@@ -11,33 +11,28 @@ type StartWorkerResponse struct {
 	Error error
 }
 
-func marshalStartWorkerResponse(data StartWorkerResponse) ([]byte, error) {
-	msg, err := newMessage()
+func marshalStartWorkerResponse(message *capnp.Message, data StartWorkerResponse) error {
+	m, err := capnp.NewStartWorkerResponse(message.Segment())
 	if err != nil {
-		return nil, err
-	}
-
-	m, err := capnp.NewStartWorkerResponse(msg.Segment())
-	if err != nil {
-		return nil, err
+		return err
 	}
 
 	if data.Error != nil {
 		err = m.SetError(data.Error.Error())
 		if err != nil {
-			return nil, err
+			return err
 		}
 	}
 
-	err = msg.Content().SetStartWorkerResponse(m)
+	err = message.Content().SetStartWorkerResponse(m)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return msg.Message().Marshal()
+	return nil
 }
 
-func unmarshalStartWorkerResponse(message capnp.Message) (StartWorkerResponse, error) {
+func unmarshalStartWorkerResponse(message *capnp.Message) (StartWorkerResponse, error) {
 	v, err := message.Content().StartWorkerResponse()
 	if err != nil {
 		return StartWorkerResponse{}, err

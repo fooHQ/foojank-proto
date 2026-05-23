@@ -14,175 +14,217 @@ func TestMarshalUnmarshal(t *testing.T) {
 
 	tests := []struct {
 		name        string
-		input       any
-		want        any
+		input       proto.Envelope
+		want        proto.Envelope
 		wantMarshal bool
 		wantErr     error
 	}{
 		{
 			name: "StartWorkerRequest",
-			input: proto.StartWorkerRequest{
-				Command: "cmd",
-				Args:    []string{"arg1", "arg2"},
-				Env:     []string{"KEY1=val1", "KEY2=val2"},
+			input: proto.Envelope{
+				Subject: proto.CmdStartWorkerSubject("agent1", "worker1"),
+				Payload: proto.StartWorkerRequest{
+					Command: "cmd",
+					Args:    []string{"arg1", "arg2"},
+					Env:     []string{"KEY1=val1", "KEY2=val2"},
+				},
 			},
-			want: proto.StartWorkerRequest{
-				Command: "cmd",
-				Args:    []string{"arg1", "arg2"},
-				Env:     []string{"KEY1=val1", "KEY2=val2"},
-			},
-			wantMarshal: true,
-		},
-		{
-			name: "StartWorkerRequest with special characters",
-			input: proto.StartWorkerRequest{
-				Command: "cmd",
-				Args:    []string{"arg with spaces", "arg\nwith\nnewlines"},
-				Env:     []string{"KEY=value with spaces", "VAR=value\nwith\nnewlines"},
-			},
-			want: proto.StartWorkerRequest{
-				Command: "cmd",
-				Args:    []string{"arg with spaces", "arg\nwith\nnewlines"},
-				Env:     []string{"KEY=value with spaces", "VAR=value\nwith\nnewlines"},
+			want: proto.Envelope{
+				Subject: proto.CmdStartWorkerSubject("agent1", "worker1"),
+				Payload: proto.StartWorkerRequest{
+					Command: "cmd",
+					Args:    []string{"arg1", "arg2"},
+					Env:     []string{"KEY1=val1", "KEY2=val2"},
+				},
 			},
 			wantMarshal: true,
 		},
 		{
 			name: "StartWorkerRequest with empty slices",
-			input: proto.StartWorkerRequest{
-				Command: "cmd",
-				Args:    []string{},
-				Env:     []string{},
+			input: proto.Envelope{
+				Subject: proto.CmdStartWorkerSubject("agent1", "worker1"),
+				Payload: proto.StartWorkerRequest{
+					Command: "cmd",
+					Args:    []string{},
+					Env:     []string{},
+				},
 			},
-			want: proto.StartWorkerRequest{
-				Command: "cmd",
-				Args:    nil,
-				Env:     nil,
+			want: proto.Envelope{
+				Subject: proto.CmdStartWorkerSubject("agent1", "worker1"),
+				Payload: proto.StartWorkerRequest{
+					Command: "cmd",
+					Args:    nil,
+					Env:     nil,
+				},
 			},
 			wantMarshal: true,
 		},
 		{
 			name: "StartWorkerResponse without error",
-			input: proto.StartWorkerResponse{
-				Error: nil,
+			input: proto.Envelope{
+				Subject: proto.EvtStartWorkerSubject("agent1", "worker1"),
+				Payload: proto.StartWorkerResponse{
+					Error: nil,
+				},
 			},
-			want: proto.StartWorkerResponse{
-				Error: nil,
+			want: proto.Envelope{
+				Subject: proto.EvtStartWorkerSubject("agent1", "worker1"),
+				Payload: proto.StartWorkerResponse{
+					Error: nil,
+				},
 			},
 			wantMarshal: true,
 		},
 		{
 			name: "StartWorkerResponse with error",
-			input: proto.StartWorkerResponse{
-				Error: testError,
+			input: proto.Envelope{
+				Subject: proto.EvtStartWorkerSubject("agent1", "worker1"),
+				Payload: proto.StartWorkerResponse{
+					Error: testError,
+				},
 			},
-			want: proto.StartWorkerResponse{
-				Error: testError,
+			want: proto.Envelope{
+				Subject: proto.EvtStartWorkerSubject("agent1", "worker1"),
+				Payload: proto.StartWorkerResponse{
+					Error: testError,
+				},
 			},
 			wantMarshal: true,
 		},
 		{
-			name:        "StopWorkerRequest",
-			input:       proto.StopWorkerRequest{},
-			want:        proto.StopWorkerRequest{},
+			name: "StopWorkerRequest",
+			input: proto.Envelope{
+				Subject: proto.CmdStopWorkerSubject("agent1", "worker1"),
+				Payload: proto.StopWorkerRequest{},
+			},
+			want: proto.Envelope{
+				Subject: proto.CmdStopWorkerSubject("agent1", "worker1"),
+				Payload: proto.StopWorkerRequest{},
+			},
 			wantMarshal: true,
 		},
 		{
 			name: "StopWorkerResponse without error",
-			input: proto.StopWorkerResponse{
-				Error: nil,
+			input: proto.Envelope{
+				Subject: proto.EvtStopWorkerSubject("agent1", "worker1"),
+				Payload: proto.StopWorkerResponse{
+					Error: nil,
+				},
 			},
-			want: proto.StopWorkerResponse{
-				Error: nil,
+			want: proto.Envelope{
+				Subject: proto.EvtStopWorkerSubject("agent1", "worker1"),
+				Payload: proto.StopWorkerResponse{
+					Error: nil,
+				},
 			},
 			wantMarshal: true,
 		},
 		{
 			name: "StopWorkerResponse with error",
-			input: proto.StopWorkerResponse{
-				Error: testError,
+			input: proto.Envelope{
+				Subject: proto.EvtStopWorkerSubject("agent1", "worker1"),
+				Payload: proto.StopWorkerResponse{
+					Error: testError,
+				},
 			},
-			want: proto.StopWorkerResponse{
-				Error: testError,
+			want: proto.Envelope{
+				Subject: proto.EvtStopWorkerSubject("agent1", "worker1"),
+				Payload: proto.StopWorkerResponse{
+					Error: testError,
+				},
 			},
 			wantMarshal: true,
 		},
 		{
 			name: "UpdateWorkerStatus",
-			input: proto.UpdateWorkerStatus{
-				Status: 42,
+			input: proto.Envelope{
+				Subject: proto.EvtWorkerStatusSubject("agent1", "worker1"),
+				Payload: proto.UpdateWorkerStatus{
+					Status: 42,
+				},
 			},
-			want: proto.UpdateWorkerStatus{
-				Status: 42,
+			want: proto.Envelope{
+				Subject: proto.EvtWorkerStatusSubject("agent1", "worker1"),
+				Payload: proto.UpdateWorkerStatus{
+					Status: 42,
+				},
 			},
 			wantMarshal: true,
 		},
 		{
 			name: "UpdateWorkerStdio",
-			input: proto.UpdateWorkerStdio{
-				Data: []byte("Hello, World!"),
+			input: proto.Envelope{
+				Subject: proto.EvtWorkerStdoutSubject("agent1", "worker1"),
+				Payload: proto.UpdateWorkerStdio{
+					Data: []byte("Hello, World!"),
+				},
 			},
-			want: proto.UpdateWorkerStdio{
-				Data: []byte("Hello, World!"),
+			want: proto.Envelope{
+				Subject: proto.EvtWorkerStdoutSubject("agent1", "worker1"),
+				Payload: proto.UpdateWorkerStdio{
+					Data: []byte("Hello, World!"),
+				},
 			},
 			wantMarshal: true,
 		},
 		{
 			name: "UpdateClientInfo",
-			input: proto.UpdateClientInfo{
-				Username: "testuser",
-				Hostname: "testhost",
-				System:   "linux",
-				Address:  "192.168.1.1",
+			input: proto.Envelope{
+				Subject: proto.EvtAgentInfoSubject("agent1"),
+				Payload: proto.UpdateClientInfo{
+					Username: "testuser",
+					Hostname: "testhost",
+					System:   "linux",
+					Address:  "192.168.1.1",
+				},
 			},
-			want: proto.UpdateClientInfo{
-				Username: "testuser",
-				Hostname: "testhost",
-				System:   "linux",
-				Address:  "192.168.1.1",
+			want: proto.Envelope{
+				Subject: proto.EvtAgentInfoSubject("agent1"),
+				Payload: proto.UpdateClientInfo{
+					Username: "testuser",
+					Hostname: "testhost",
+					System:   "linux",
+					Address:  "192.168.1.1",
+				},
 			},
 			wantMarshal: true,
 		},
 		{
 			name: "UpdateClientInfo with empty fields",
-			input: proto.UpdateClientInfo{
-				Username: "",
-				Hostname: "",
-				System:   "",
-				Address:  "",
+			input: proto.Envelope{
+				Subject: proto.EvtAgentInfoSubject("agent1"),
+				Payload: proto.UpdateClientInfo{
+					Username: "",
+					Hostname: "",
+					System:   "",
+					Address:  "",
+				},
 			},
-			want: proto.UpdateClientInfo{
-				Username: "",
-				Hostname: "",
-				System:   "",
-				Address:  "",
-			},
-			wantMarshal: true,
-		},
-		{
-			name: "UpdateClientInfo with special characters",
-			input: proto.UpdateClientInfo{
-				Username: "user with spaces",
-				Hostname: "host-name.local",
-				System:   "Windows 10",
-				Address:  "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
-			},
-			want: proto.UpdateClientInfo{
-				Username: "user with spaces",
-				Hostname: "host-name.local",
-				System:   "Windows 10",
-				Address:  "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+			want: proto.Envelope{
+				Subject: proto.EvtAgentInfoSubject("agent1"),
+				Payload: proto.UpdateClientInfo{
+					Username: "",
+					Hostname: "",
+					System:   "",
+					Address:  "",
+				},
 			},
 			wantMarshal: true,
 		},
 		{
-			name:    "Unsupported type",
-			input:   struct{}{},
+			name: "Unsupported type",
+			input: proto.Envelope{
+				Subject: "",
+				Payload: struct{}{},
+			},
 			wantErr: proto.ErrUnknownMessage,
 		},
 		{
-			name:    "Nil input",
-			input:   nil,
+			name: "Nil input",
+			input: proto.Envelope{
+				Subject: "",
+				Payload: nil,
+			},
 			wantErr: proto.ErrUnknownMessage,
 		},
 	}

@@ -1,6 +1,8 @@
 package proto
 
-import capnp "github.com/foohq/foojank-proto/go/agent"
+import (
+	capnp "github.com/foohq/foojank-proto/go/agent"
+)
 
 // StartWorkerRequest is a request to start a new worker.
 type StartWorkerRequest struct {
@@ -9,51 +11,46 @@ type StartWorkerRequest struct {
 	Env     []string
 }
 
-func marshalStartWorkerRequest(data StartWorkerRequest) ([]byte, error) {
-	msg, err := newMessage()
+func marshalStartWorkerRequest(message *capnp.Message, data StartWorkerRequest) error {
+	m, err := capnp.NewStartWorkerRequest(message.Segment())
 	if err != nil {
-		return nil, err
-	}
-
-	m, err := capnp.NewStartWorkerRequest(msg.Segment())
-	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = m.SetCommand(data.Command)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	argsList, err := newTextList(msg.Segment(), data.Args)
+	argsList, err := newTextList(message.Segment(), data.Args)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = m.SetArgs(argsList)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	envList, err := newTextList(msg.Segment(), data.Env)
+	envList, err := newTextList(message.Segment(), data.Env)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = m.SetEnv(envList)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	err = msg.Content().SetStartWorkerRequest(m)
+	err = message.Content().SetStartWorkerRequest(m)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return msg.Message().Marshal()
+	return nil
 }
 
-func unmarshalStartWorkerRequest(message capnp.Message) (StartWorkerRequest, error) {
+func unmarshalStartWorkerRequest(message *capnp.Message) (StartWorkerRequest, error) {
 	v, err := message.Content().StartWorkerRequest()
 	if err != nil {
 		return StartWorkerRequest{}, err
