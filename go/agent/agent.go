@@ -1,12 +1,12 @@
-// Package proto provides functions for marshaling and unmarshaling messages.
-package proto
+// Package agent provides functions for marshaling and unmarshaling messages.
+package agent
 
 import (
 	"errors"
 
 	capnplib "capnproto.org/go/capnp/v3"
 
-	capnp "github.com/foohq/foojank-proto/go/agent"
+	capnp "github.com/foohq/foojank-proto/go/agent/capnp"
 )
 
 var (

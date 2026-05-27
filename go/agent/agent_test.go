@@ -1,4 +1,4 @@
-package proto_test
+package agent_test
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	proto "github.com/foohq/foojank-proto/go"
+	"github.com/foohq/foojank-proto/go/agent"
 )
 
 func TestMarshalUnmarshal(t *testing.T) {
@@ -14,24 +14,24 @@ func TestMarshalUnmarshal(t *testing.T) {
 
 	tests := []struct {
 		name        string
-		input       proto.Envelope
-		want        proto.Envelope
+		input       agent.Envelope
+		want        agent.Envelope
 		wantMarshal bool
 		wantErr     error
 	}{
 		{
 			name: "StartWorkerRequest",
-			input: proto.Envelope{
-				Subject: proto.CmdStartWorkerSubject("agent1", "worker1"),
-				Payload: proto.StartWorkerRequest{
+			input: agent.Envelope{
+				Subject: agent.CmdStartWorkerSubject("agent1", "worker1"),
+				Payload: agent.StartWorkerRequest{
 					Command: "cmd",
 					Args:    []string{"arg1", "arg2"},
 					Env:     []string{"KEY1=val1", "KEY2=val2"},
 				},
 			},
-			want: proto.Envelope{
-				Subject: proto.CmdStartWorkerSubject("agent1", "worker1"),
-				Payload: proto.StartWorkerRequest{
+			want: agent.Envelope{
+				Subject: agent.CmdStartWorkerSubject("agent1", "worker1"),
+				Payload: agent.StartWorkerRequest{
 					Command: "cmd",
 					Args:    []string{"arg1", "arg2"},
 					Env:     []string{"KEY1=val1", "KEY2=val2"},
@@ -41,17 +41,17 @@ func TestMarshalUnmarshal(t *testing.T) {
 		},
 		{
 			name: "StartWorkerRequest with empty slices",
-			input: proto.Envelope{
-				Subject: proto.CmdStartWorkerSubject("agent1", "worker1"),
-				Payload: proto.StartWorkerRequest{
+			input: agent.Envelope{
+				Subject: agent.CmdStartWorkerSubject("agent1", "worker1"),
+				Payload: agent.StartWorkerRequest{
 					Command: "cmd",
 					Args:    []string{},
 					Env:     []string{},
 				},
 			},
-			want: proto.Envelope{
-				Subject: proto.CmdStartWorkerSubject("agent1", "worker1"),
-				Payload: proto.StartWorkerRequest{
+			want: agent.Envelope{
+				Subject: agent.CmdStartWorkerSubject("agent1", "worker1"),
+				Payload: agent.StartWorkerRequest{
 					Command: "cmd",
 					Args:    nil,
 					Env:     nil,
@@ -61,15 +61,15 @@ func TestMarshalUnmarshal(t *testing.T) {
 		},
 		{
 			name: "StartWorkerResponse without error",
-			input: proto.Envelope{
-				Subject: proto.EvtStartWorkerSubject("agent1", "worker1"),
-				Payload: proto.StartWorkerResponse{
+			input: agent.Envelope{
+				Subject: agent.EvtStartWorkerSubject("agent1", "worker1"),
+				Payload: agent.StartWorkerResponse{
 					Error: nil,
 				},
 			},
-			want: proto.Envelope{
-				Subject: proto.EvtStartWorkerSubject("agent1", "worker1"),
-				Payload: proto.StartWorkerResponse{
+			want: agent.Envelope{
+				Subject: agent.EvtStartWorkerSubject("agent1", "worker1"),
+				Payload: agent.StartWorkerResponse{
 					Error: nil,
 				},
 			},
@@ -77,15 +77,15 @@ func TestMarshalUnmarshal(t *testing.T) {
 		},
 		{
 			name: "StartWorkerResponse with error",
-			input: proto.Envelope{
-				Subject: proto.EvtStartWorkerSubject("agent1", "worker1"),
-				Payload: proto.StartWorkerResponse{
+			input: agent.Envelope{
+				Subject: agent.EvtStartWorkerSubject("agent1", "worker1"),
+				Payload: agent.StartWorkerResponse{
 					Error: testError,
 				},
 			},
-			want: proto.Envelope{
-				Subject: proto.EvtStartWorkerSubject("agent1", "worker1"),
-				Payload: proto.StartWorkerResponse{
+			want: agent.Envelope{
+				Subject: agent.EvtStartWorkerSubject("agent1", "worker1"),
+				Payload: agent.StartWorkerResponse{
 					Error: testError,
 				},
 			},
@@ -93,27 +93,27 @@ func TestMarshalUnmarshal(t *testing.T) {
 		},
 		{
 			name: "StopWorkerRequest",
-			input: proto.Envelope{
-				Subject: proto.CmdStopWorkerSubject("agent1", "worker1"),
-				Payload: proto.StopWorkerRequest{},
+			input: agent.Envelope{
+				Subject: agent.CmdStopWorkerSubject("agent1", "worker1"),
+				Payload: agent.StopWorkerRequest{},
 			},
-			want: proto.Envelope{
-				Subject: proto.CmdStopWorkerSubject("agent1", "worker1"),
-				Payload: proto.StopWorkerRequest{},
+			want: agent.Envelope{
+				Subject: agent.CmdStopWorkerSubject("agent1", "worker1"),
+				Payload: agent.StopWorkerRequest{},
 			},
 			wantMarshal: true,
 		},
 		{
 			name: "StopWorkerResponse without error",
-			input: proto.Envelope{
-				Subject: proto.EvtStopWorkerSubject("agent1", "worker1"),
-				Payload: proto.StopWorkerResponse{
+			input: agent.Envelope{
+				Subject: agent.EvtStopWorkerSubject("agent1", "worker1"),
+				Payload: agent.StopWorkerResponse{
 					Error: nil,
 				},
 			},
-			want: proto.Envelope{
-				Subject: proto.EvtStopWorkerSubject("agent1", "worker1"),
-				Payload: proto.StopWorkerResponse{
+			want: agent.Envelope{
+				Subject: agent.EvtStopWorkerSubject("agent1", "worker1"),
+				Payload: agent.StopWorkerResponse{
 					Error: nil,
 				},
 			},
@@ -121,15 +121,15 @@ func TestMarshalUnmarshal(t *testing.T) {
 		},
 		{
 			name: "StopWorkerResponse with error",
-			input: proto.Envelope{
-				Subject: proto.EvtStopWorkerSubject("agent1", "worker1"),
-				Payload: proto.StopWorkerResponse{
+			input: agent.Envelope{
+				Subject: agent.EvtStopWorkerSubject("agent1", "worker1"),
+				Payload: agent.StopWorkerResponse{
 					Error: testError,
 				},
 			},
-			want: proto.Envelope{
-				Subject: proto.EvtStopWorkerSubject("agent1", "worker1"),
-				Payload: proto.StopWorkerResponse{
+			want: agent.Envelope{
+				Subject: agent.EvtStopWorkerSubject("agent1", "worker1"),
+				Payload: agent.StopWorkerResponse{
 					Error: testError,
 				},
 			},
@@ -137,15 +137,15 @@ func TestMarshalUnmarshal(t *testing.T) {
 		},
 		{
 			name: "UpdateWorkerStatus",
-			input: proto.Envelope{
-				Subject: proto.EvtWorkerStatusSubject("agent1", "worker1"),
-				Payload: proto.UpdateWorkerStatus{
+			input: agent.Envelope{
+				Subject: agent.EvtWorkerStatusSubject("agent1", "worker1"),
+				Payload: agent.UpdateWorkerStatus{
 					Status: 42,
 				},
 			},
-			want: proto.Envelope{
-				Subject: proto.EvtWorkerStatusSubject("agent1", "worker1"),
-				Payload: proto.UpdateWorkerStatus{
+			want: agent.Envelope{
+				Subject: agent.EvtWorkerStatusSubject("agent1", "worker1"),
+				Payload: agent.UpdateWorkerStatus{
 					Status: 42,
 				},
 			},
@@ -153,15 +153,15 @@ func TestMarshalUnmarshal(t *testing.T) {
 		},
 		{
 			name: "UpdateWorkerStdio",
-			input: proto.Envelope{
-				Subject: proto.EvtWorkerStdoutSubject("agent1", "worker1"),
-				Payload: proto.UpdateWorkerStdio{
+			input: agent.Envelope{
+				Subject: agent.EvtWorkerStdoutSubject("agent1", "worker1"),
+				Payload: agent.UpdateWorkerStdio{
 					Data: []byte("Hello, World!"),
 				},
 			},
-			want: proto.Envelope{
-				Subject: proto.EvtWorkerStdoutSubject("agent1", "worker1"),
-				Payload: proto.UpdateWorkerStdio{
+			want: agent.Envelope{
+				Subject: agent.EvtWorkerStdoutSubject("agent1", "worker1"),
+				Payload: agent.UpdateWorkerStdio{
 					Data: []byte("Hello, World!"),
 				},
 			},
@@ -169,18 +169,18 @@ func TestMarshalUnmarshal(t *testing.T) {
 		},
 		{
 			name: "UpdateClientInfo",
-			input: proto.Envelope{
-				Subject: proto.EvtAgentInfoSubject("agent1"),
-				Payload: proto.UpdateClientInfo{
+			input: agent.Envelope{
+				Subject: agent.EvtAgentInfoSubject("agent1"),
+				Payload: agent.UpdateClientInfo{
 					Username: "testuser",
 					Hostname: "testhost",
 					System:   "linux",
 					Address:  "192.168.1.1",
 				},
 			},
-			want: proto.Envelope{
-				Subject: proto.EvtAgentInfoSubject("agent1"),
-				Payload: proto.UpdateClientInfo{
+			want: agent.Envelope{
+				Subject: agent.EvtAgentInfoSubject("agent1"),
+				Payload: agent.UpdateClientInfo{
 					Username: "testuser",
 					Hostname: "testhost",
 					System:   "linux",
@@ -191,18 +191,18 @@ func TestMarshalUnmarshal(t *testing.T) {
 		},
 		{
 			name: "UpdateClientInfo with empty fields",
-			input: proto.Envelope{
-				Subject: proto.EvtAgentInfoSubject("agent1"),
-				Payload: proto.UpdateClientInfo{
+			input: agent.Envelope{
+				Subject: agent.EvtAgentInfoSubject("agent1"),
+				Payload: agent.UpdateClientInfo{
 					Username: "",
 					Hostname: "",
 					System:   "",
 					Address:  "",
 				},
 			},
-			want: proto.Envelope{
-				Subject: proto.EvtAgentInfoSubject("agent1"),
-				Payload: proto.UpdateClientInfo{
+			want: agent.Envelope{
+				Subject: agent.EvtAgentInfoSubject("agent1"),
+				Payload: agent.UpdateClientInfo{
 					Username: "",
 					Hostname: "",
 					System:   "",
@@ -213,26 +213,26 @@ func TestMarshalUnmarshal(t *testing.T) {
 		},
 		{
 			name: "Unsupported type",
-			input: proto.Envelope{
+			input: agent.Envelope{
 				Subject: "",
 				Payload: struct{}{},
 			},
-			wantErr: proto.ErrUnknownMessage,
+			wantErr: agent.ErrUnknownMessage,
 		},
 		{
 			name: "Nil input",
-			input: proto.Envelope{
+			input: agent.Envelope{
 				Subject: "",
 				Payload: nil,
 			},
-			wantErr: proto.ErrUnknownMessage,
+			wantErr: agent.ErrUnknownMessage,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			// Test Marshal
-			marshaled, err := proto.Marshal(tt.input)
+			marshaled, err := agent.Marshal(tt.input)
 			if tt.wantErr != nil {
 				require.Error(t, err)
 				require.Equal(t, tt.wantErr, err)
@@ -242,7 +242,7 @@ func TestMarshalUnmarshal(t *testing.T) {
 			require.NotEmpty(t, marshaled)
 
 			// Test Unmarshal
-			unmarshaled, err := proto.Unmarshal(marshaled)
+			unmarshaled, err := agent.Unmarshal(marshaled)
 			require.NoError(t, err)
 			require.Equal(t, tt.want, unmarshaled)
 		})
@@ -279,7 +279,7 @@ func TestUnmarshalInvalidData(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := proto.Unmarshal(tt.input)
+			_, err := agent.Unmarshal(tt.input)
 			if tt.wantErr {
 				require.Error(t, err)
 			} else {
@@ -290,41 +290,41 @@ func TestUnmarshalInvalidData(t *testing.T) {
 }
 
 func TestCmdStartWorkerSubject(t *testing.T) {
-	got := proto.CmdStartWorkerSubject("agent1", "worker1")
+	got := agent.CmdStartWorkerSubject("agent1", "worker1")
 	require.Equal(t, "FJ.AGENT.agent1.CMD.WORKER.worker1.START", got)
 }
 
 func TestCmdStopWorkerSubject(t *testing.T) {
-	got := proto.CmdStopWorkerSubject("agent1", "worker1")
+	got := agent.CmdStopWorkerSubject("agent1", "worker1")
 	require.Equal(t, "FJ.AGENT.agent1.CMD.WORKER.worker1.STOP", got)
 }
 
 func TestCmdWriteStdinSubject(t *testing.T) {
-	got := proto.CmdWriteStdinSubject("agent1", "worker1")
+	got := agent.CmdWriteStdinSubject("agent1", "worker1")
 	require.Equal(t, "FJ.AGENT.agent1.CMD.WORKER.worker1.STDIN", got)
 }
 
 func TestEvtStartWorkerSubject(t *testing.T) {
-	got := proto.EvtStartWorkerSubject("agent1", "worker1")
+	got := agent.EvtStartWorkerSubject("agent1", "worker1")
 	require.Equal(t, "FJ.AGENT.agent1.EVT.WORKER.worker1.START", got)
 }
 
 func TestEvtStopWorkerSubject(t *testing.T) {
-	got := proto.EvtStopWorkerSubject("agent1", "worker1")
+	got := agent.EvtStopWorkerSubject("agent1", "worker1")
 	require.Equal(t, "FJ.AGENT.agent1.EVT.WORKER.worker1.STOP", got)
 }
 
 func TestEvtWorkerStatusSubject(t *testing.T) {
-	got := proto.EvtWorkerStatusSubject("agent1", "worker1")
+	got := agent.EvtWorkerStatusSubject("agent1", "worker1")
 	require.Equal(t, "FJ.AGENT.agent1.EVT.WORKER.worker1.STATUS", got)
 }
 
 func TestEvtWorkerStdoutSubject(t *testing.T) {
-	got := proto.EvtWorkerStdoutSubject("agent1", "worker1")
+	got := agent.EvtWorkerStdoutSubject("agent1", "worker1")
 	require.Equal(t, "FJ.AGENT.agent1.EVT.WORKER.worker1.STDOUT", got)
 }
 
 func TestEvtAgentInfoSubject(t *testing.T) {
-	got := proto.EvtAgentInfoSubject("agent1")
+	got := agent.EvtAgentInfoSubject("agent1")
 	require.Equal(t, "FJ.AGENT.agent1.EVT.INFO", got)
 }

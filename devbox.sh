@@ -31,7 +31,7 @@ build() {
 }
 
 build_schema_go() {
-    local output_dir="./go/$(basename "$1" ".capnp")"
+    local output_dir="./go/$(basename "$1" ".capnp")/capnp"
     mkdir -p "$output_dir"
     capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$DEVBOX_INCLUDE" -o ./build/capnpc-go:"$output_dir" "$1"
 }

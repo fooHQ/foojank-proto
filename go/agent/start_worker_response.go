@@ -1,9 +1,9 @@
-package proto
+package agent
 
 import (
 	"errors"
 
-	capnp "github.com/foohq/foojank-proto/go/agent"
+	capnp "github.com/foohq/foojank-proto/go/agent/capnp"
 )
 
 // StartWorkerResponse is a response to a StartWorkerRequest.

@@ -1,7 +1,7 @@
-package proto
+package agent
 
 import (
-	capnp "github.com/foohq/foojank-proto/go/agent"
+	capnp "github.com/foohq/foojank-proto/go/agent/capnp"
 )
 
 // UpdateWorkerStdio contains data from a worker's stdout or stdin.
