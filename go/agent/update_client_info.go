@@ -1,7 +1,7 @@
-package proto
+package agent
 
 import (
-	capnp "github.com/foohq/foojank-proto/go/agent"
+	capnp "github.com/foohq/foojank-proto/go/agent/capnp"
 )
 
 // UpdateClientInfo contains information about a client.
