@@ -29,7 +29,7 @@ To maintain a consistent environment, this project uses **Devbox**.
 To use the Go bindings in your project, add the module to your `go.mod`:
 
 ```bash
-go get github.com/foohq/foojank-proto/go/agent
+go get github.com/foohq/foojank-proto/go
 ```
 
 Example usage:
@@ -37,7 +37,7 @@ Example usage:
 ```go
 import (
     "fmt"
-    "github.com/foohq/foojank-proto/go/agent"
+    "github.com/foohq/foojank-proto/go/agent/capnp"
     "capnproto.org/go/capnp/v3"
 )
 
