@@ -16,30 +16,30 @@ const exitCommandNotFound :Int64 = 127;
 const exitInterrupted     :Int64 = 130;
 
 # cmdStartWorkerT is a message subject used to send start worker commands to an agent.
-# The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
-const cmdStartWorkerT  :Text = "FJ.AGENT.%s.CMD.WORKER.%s.START";
+# The "%s" placeholders must be replaced with the gateway ID, agent ID, and worker ID, respectively.
+const cmdStartWorkerT  :Text = "FJ.GATEWAY.%s.AGENT.%s.CMD.WORKER.%s.START";
 # cmdStopWorkerT is a message subject used to send stop worker commands to an agent.
-# The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
-const cmdStopWorkerT   :Text = "FJ.AGENT.%s.CMD.WORKER.%s.STOP";
+# The "%s" placeholders must be replaced with the gateway ID, agent ID, and worker ID, respectively.
+const cmdStopWorkerT   :Text = "FJ.GATEWAY.%s.AGENT.%s.CMD.WORKER.%s.STOP";
 # cmdWriteStdinT is a message subject used to send stdin data to a worker process.
-# The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
-const cmdWriteStdinT   :Text = "FJ.AGENT.%s.CMD.WORKER.%s.STDIN";
+# The "%s" placeholders must be replaced with the gateway ID, agent ID, and worker ID, respectively.
+const cmdWriteStdinT   :Text = "FJ.GATEWAY.%s.AGENT.%s.CMD.WORKER.%s.STDIN";
 
 # evtStartWorkerT is a message subject where worker start events are published.
-# The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
-const evtStartWorkerT  :Text = "FJ.AGENT.%s.EVT.WORKER.%s.START";
+# The "%s" placeholders must be replaced with the gateway ID, agent ID, and worker ID, respectively.
+const evtStartWorkerT  :Text = "FJ.GATEWAY.%s.AGENT.%s.EVT.WORKER.%s.START";
 # evtStopWorkerT is a message subject where worker stop events are published.
-# The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
-const evtStopWorkerT   :Text = "FJ.AGENT.%s.EVT.WORKER.%s.STOP";
+# The "%s" placeholders must be replaced with the gateway ID, agent ID, and worker ID, respectively.
+const evtStopWorkerT   :Text = "FJ.GATEWAY.%s.AGENT.%s.EVT.WORKER.%s.STOP";
 # evtWorkerStatusT is a message subject where worker status updates are published.
-# The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
-const evtWorkerStatusT :Text = "FJ.AGENT.%s.EVT.WORKER.%s.STATUS";
+# The "%s" placeholders must be replaced with the gateway ID, agent ID, and worker ID, respectively.
+const evtWorkerStatusT :Text = "FJ.GATEWAY.%s.AGENT.%s.EVT.WORKER.%s.STATUS";
 # evtWorkerStdoutT is a message subject where worker stdout data is published.
-# The "%s" placeholders must be replaced with the agent ID and worker ID, respectively.
-const evtWorkerStdoutT :Text = "FJ.AGENT.%s.EVT.WORKER.%s.STDOUT";
+# The "%s" placeholders must be replaced with the gateway ID, agent ID, and worker ID, respectively.
+const evtWorkerStdoutT :Text = "FJ.GATEWAY.%s.AGENT.%s.EVT.WORKER.%s.STDOUT";
 # evtAgentInfoT is a message subject where agent identification info is published.
-# The "%s" placeholder must be replaced with the agent ID.
-const evtAgentInfoT    :Text = "FJ.AGENT.%s.EVT.INFO";
+# The "%s" placeholders must be replaced with the gateway ID and agent ID, respectively.
+const evtAgentInfoT    :Text = "FJ.GATEWAY.%s.AGENT.%s.EVT.INFO";
 
 # StartWorkerRequest is sent by a client to an agent to start a new worker process.
 struct StartWorkerRequest {
