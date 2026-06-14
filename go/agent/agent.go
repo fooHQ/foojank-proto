@@ -114,43 +114,43 @@ func Unmarshal(b []byte) (Envelope, error) {
 }
 
 // CmdStartWorkerSubject returns the NATS subject for sending a start worker command to an agent.
-func CmdStartWorkerSubject(agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.CmdStartWorkerT, agentID, workerID)
+func CmdStartWorkerSubject(gatewayID, agentID, workerID string) string {
+	return replaceStringPlaceholders(capnp.CmdStartWorkerT, gatewayID, agentID, workerID)
 }
 
 // CmdStopWorkerSubject returns the NATS subject for sending a stop worker command to an agent.
-func CmdStopWorkerSubject(agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.CmdStopWorkerT, agentID, workerID)
+func CmdStopWorkerSubject(gatewayID, agentID, workerID string) string {
+	return replaceStringPlaceholders(capnp.CmdStopWorkerT, gatewayID, agentID, workerID)
 }
 
 // CmdWriteStdinSubject returns the NATS subject for sending stdin to a worker via an agent.
-func CmdWriteStdinSubject(agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.CmdWriteStdinT, agentID, workerID)
+func CmdWriteStdinSubject(gatewayID, agentID, workerID string) string {
+	return replaceStringPlaceholders(capnp.CmdWriteStdinT, gatewayID, agentID, workerID)
 }
 
 // EvtStartWorkerSubject returns the NATS subject for a worker start event.
-func EvtStartWorkerSubject(agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.EvtStartWorkerT, agentID, workerID)
+func EvtStartWorkerSubject(gatewayID, agentID, workerID string) string {
+	return replaceStringPlaceholders(capnp.EvtStartWorkerT, gatewayID, agentID, workerID)
 }
 
 // EvtStopWorkerSubject returns the NATS subject for a worker stop event.
-func EvtStopWorkerSubject(agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.EvtStopWorkerT, agentID, workerID)
+func EvtStopWorkerSubject(gatewayID, agentID, workerID string) string {
+	return replaceStringPlaceholders(capnp.EvtStopWorkerT, gatewayID, agentID, workerID)
 }
 
 // EvtWorkerStatusSubject returns the NATS subject for a worker status event.
-func EvtWorkerStatusSubject(agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.EvtWorkerStatusT, agentID, workerID)
+func EvtWorkerStatusSubject(gatewayID, agentID, workerID string) string {
+	return replaceStringPlaceholders(capnp.EvtWorkerStatusT, gatewayID, agentID, workerID)
 }
 
 // EvtWorkerStdoutSubject returns the NATS subject for a worker stdout event.
-func EvtWorkerStdoutSubject(agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.EvtWorkerStdoutT, agentID, workerID)
+func EvtWorkerStdoutSubject(gatewayID, agentID, workerID string) string {
+	return replaceStringPlaceholders(capnp.EvtWorkerStdoutT, gatewayID, agentID, workerID)
 }
 
 // EvtAgentInfoSubject returns the NATS subject for an agent info event.
-func EvtAgentInfoSubject(agentID string) string {
-	return replaceStringPlaceholders(capnp.EvtAgentInfoT, agentID)
+func EvtAgentInfoSubject(gatewayID, agentID string) string {
+	return replaceStringPlaceholders(capnp.EvtAgentInfoT, gatewayID, agentID)
 }
 
 func replaceStringPlaceholders(s string, values ...string) string {
