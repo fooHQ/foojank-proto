@@ -21,6 +21,7 @@ install_capnproto_go() {
 build() {
     local schemas=(
         "./schema/agent.capnp"
+        "./schema/gateway.capnp"
     )
     for schema in "${schemas[@]}"; do
         build_schema_go "$schema"
