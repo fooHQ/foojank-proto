@@ -22,7 +22,7 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "StartWorkerRequest",
 			input: agent.Envelope{
-				Subject: agent.CmdStartWorkerSubject("agent1", "worker1"),
+				Subject: agent.CmdStartWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StartWorkerRequest{
 					Command: "cmd",
 					Args:    []string{"arg1", "arg2"},
@@ -30,7 +30,7 @@ func TestMarshalUnmarshal(t *testing.T) {
 				},
 			},
 			want: agent.Envelope{
-				Subject: agent.CmdStartWorkerSubject("agent1", "worker1"),
+				Subject: agent.CmdStartWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StartWorkerRequest{
 					Command: "cmd",
 					Args:    []string{"arg1", "arg2"},
@@ -42,7 +42,7 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "StartWorkerRequest with empty slices",
 			input: agent.Envelope{
-				Subject: agent.CmdStartWorkerSubject("agent1", "worker1"),
+				Subject: agent.CmdStartWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StartWorkerRequest{
 					Command: "cmd",
 					Args:    []string{},
@@ -50,7 +50,7 @@ func TestMarshalUnmarshal(t *testing.T) {
 				},
 			},
 			want: agent.Envelope{
-				Subject: agent.CmdStartWorkerSubject("agent1", "worker1"),
+				Subject: agent.CmdStartWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StartWorkerRequest{
 					Command: "cmd",
 					Args:    nil,
@@ -62,13 +62,13 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "StartWorkerResponse without error",
 			input: agent.Envelope{
-				Subject: agent.EvtStartWorkerSubject("agent1", "worker1"),
+				Subject: agent.EvtStartWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StartWorkerResponse{
 					Error: nil,
 				},
 			},
 			want: agent.Envelope{
-				Subject: agent.EvtStartWorkerSubject("agent1", "worker1"),
+				Subject: agent.EvtStartWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StartWorkerResponse{
 					Error: nil,
 				},
@@ -78,13 +78,13 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "StartWorkerResponse with error",
 			input: agent.Envelope{
-				Subject: agent.EvtStartWorkerSubject("agent1", "worker1"),
+				Subject: agent.EvtStartWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StartWorkerResponse{
 					Error: testError,
 				},
 			},
 			want: agent.Envelope{
-				Subject: agent.EvtStartWorkerSubject("agent1", "worker1"),
+				Subject: agent.EvtStartWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StartWorkerResponse{
 					Error: testError,
 				},
@@ -94,11 +94,11 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "StopWorkerRequest",
 			input: agent.Envelope{
-				Subject: agent.CmdStopWorkerSubject("agent1", "worker1"),
+				Subject: agent.CmdStopWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StopWorkerRequest{},
 			},
 			want: agent.Envelope{
-				Subject: agent.CmdStopWorkerSubject("agent1", "worker1"),
+				Subject: agent.CmdStopWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StopWorkerRequest{},
 			},
 			wantMarshal: true,
@@ -106,13 +106,13 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "StopWorkerResponse without error",
 			input: agent.Envelope{
-				Subject: agent.EvtStopWorkerSubject("agent1", "worker1"),
+				Subject: agent.EvtStopWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StopWorkerResponse{
 					Error: nil,
 				},
 			},
 			want: agent.Envelope{
-				Subject: agent.EvtStopWorkerSubject("agent1", "worker1"),
+				Subject: agent.EvtStopWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StopWorkerResponse{
 					Error: nil,
 				},
@@ -122,13 +122,13 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "StopWorkerResponse with error",
 			input: agent.Envelope{
-				Subject: agent.EvtStopWorkerSubject("agent1", "worker1"),
+				Subject: agent.EvtStopWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StopWorkerResponse{
 					Error: testError,
 				},
 			},
 			want: agent.Envelope{
-				Subject: agent.EvtStopWorkerSubject("agent1", "worker1"),
+				Subject: agent.EvtStopWorkerSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.StopWorkerResponse{
 					Error: testError,
 				},
@@ -138,13 +138,13 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "UpdateWorkerStatus",
 			input: agent.Envelope{
-				Subject: agent.EvtWorkerStatusSubject("agent1", "worker1"),
+				Subject: agent.EvtWorkerStatusSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.UpdateWorkerStatus{
 					Status: 42,
 				},
 			},
 			want: agent.Envelope{
-				Subject: agent.EvtWorkerStatusSubject("agent1", "worker1"),
+				Subject: agent.EvtWorkerStatusSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.UpdateWorkerStatus{
 					Status: 42,
 				},
@@ -154,13 +154,13 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "UpdateWorkerStdio",
 			input: agent.Envelope{
-				Subject: agent.EvtWorkerStdoutSubject("agent1", "worker1"),
+				Subject: agent.EvtWorkerStdoutSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.UpdateWorkerStdio{
 					Data: []byte("Hello, World!"),
 				},
 			},
 			want: agent.Envelope{
-				Subject: agent.EvtWorkerStdoutSubject("agent1", "worker1"),
+				Subject: agent.EvtWorkerStdoutSubject("gateway1", "agent1", "worker1"),
 				Payload: agent.UpdateWorkerStdio{
 					Data: []byte("Hello, World!"),
 				},
@@ -170,7 +170,7 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "UpdateClientInfo",
 			input: agent.Envelope{
-				Subject: agent.EvtAgentInfoSubject("agent1"),
+				Subject: agent.EvtAgentInfoSubject("gateway1", "agent1"),
 				Payload: agent.UpdateClientInfo{
 					Username: "testuser",
 					Hostname: "testhost",
@@ -179,7 +179,7 @@ func TestMarshalUnmarshal(t *testing.T) {
 				},
 			},
 			want: agent.Envelope{
-				Subject: agent.EvtAgentInfoSubject("agent1"),
+				Subject: agent.EvtAgentInfoSubject("gateway1", "agent1"),
 				Payload: agent.UpdateClientInfo{
 					Username: "testuser",
 					Hostname: "testhost",
@@ -192,7 +192,7 @@ func TestMarshalUnmarshal(t *testing.T) {
 		{
 			name: "UpdateClientInfo with empty fields",
 			input: agent.Envelope{
-				Subject: agent.EvtAgentInfoSubject("agent1"),
+				Subject: agent.EvtAgentInfoSubject("gateway1", "agent1"),
 				Payload: agent.UpdateClientInfo{
 					Username: "",
 					Hostname: "",
@@ -201,7 +201,7 @@ func TestMarshalUnmarshal(t *testing.T) {
 				},
 			},
 			want: agent.Envelope{
-				Subject: agent.EvtAgentInfoSubject("agent1"),
+				Subject: agent.EvtAgentInfoSubject("gateway1", "agent1"),
 				Payload: agent.UpdateClientInfo{
 					Username: "",
 					Hostname: "",
@@ -290,41 +290,41 @@ func TestUnmarshalInvalidData(t *testing.T) {
 }
 
 func TestCmdStartWorkerSubject(t *testing.T) {
-	got := agent.CmdStartWorkerSubject("agent1", "worker1")
-	require.Equal(t, "FJ.AGENT.agent1.CMD.WORKER.worker1.START", got)
+	got := agent.CmdStartWorkerSubject("gateway1", "agent1", "worker1")
+	require.Equal(t, "FJ.GATEWAY.gateway1.AGENT.agent1.CMD.WORKER.worker1.START", got)
 }
 
 func TestCmdStopWorkerSubject(t *testing.T) {
-	got := agent.CmdStopWorkerSubject("agent1", "worker1")
-	require.Equal(t, "FJ.AGENT.agent1.CMD.WORKER.worker1.STOP", got)
+	got := agent.CmdStopWorkerSubject("gateway1", "agent1", "worker1")
+	require.Equal(t, "FJ.GATEWAY.gateway1.AGENT.agent1.CMD.WORKER.worker1.STOP", got)
 }
 
 func TestCmdWriteStdinSubject(t *testing.T) {
-	got := agent.CmdWriteStdinSubject("agent1", "worker1")
-	require.Equal(t, "FJ.AGENT.agent1.CMD.WORKER.worker1.STDIN", got)
+	got := agent.CmdWriteStdinSubject("gateway1", "agent1", "worker1")
+	require.Equal(t, "FJ.GATEWAY.gateway1.AGENT.agent1.CMD.WORKER.worker1.STDIN", got)
 }
 
 func TestEvtStartWorkerSubject(t *testing.T) {
-	got := agent.EvtStartWorkerSubject("agent1", "worker1")
-	require.Equal(t, "FJ.AGENT.agent1.EVT.WORKER.worker1.START", got)
+	got := agent.EvtStartWorkerSubject("gateway1", "agent1", "worker1")
+	require.Equal(t, "FJ.GATEWAY.gateway1.AGENT.agent1.EVT.WORKER.worker1.START", got)
 }
 
 func TestEvtStopWorkerSubject(t *testing.T) {
-	got := agent.EvtStopWorkerSubject("agent1", "worker1")
-	require.Equal(t, "FJ.AGENT.agent1.EVT.WORKER.worker1.STOP", got)
+	got := agent.EvtStopWorkerSubject("gateway1", "agent1", "worker1")
+	require.Equal(t, "FJ.GATEWAY.gateway1.AGENT.agent1.EVT.WORKER.worker1.STOP", got)
 }
 
 func TestEvtWorkerStatusSubject(t *testing.T) {
-	got := agent.EvtWorkerStatusSubject("agent1", "worker1")
-	require.Equal(t, "FJ.AGENT.agent1.EVT.WORKER.worker1.STATUS", got)
+	got := agent.EvtWorkerStatusSubject("gateway1", "agent1", "worker1")
+	require.Equal(t, "FJ.GATEWAY.gateway1.AGENT.agent1.EVT.WORKER.worker1.STATUS", got)
 }
 
 func TestEvtWorkerStdoutSubject(t *testing.T) {
-	got := agent.EvtWorkerStdoutSubject("agent1", "worker1")
-	require.Equal(t, "FJ.AGENT.agent1.EVT.WORKER.worker1.STDOUT", got)
+	got := agent.EvtWorkerStdoutSubject("gateway1", "agent1", "worker1")
+	require.Equal(t, "FJ.GATEWAY.gateway1.AGENT.agent1.EVT.WORKER.worker1.STDOUT", got)
 }
 
 func TestEvtAgentInfoSubject(t *testing.T) {
-	got := agent.EvtAgentInfoSubject("agent1")
-	require.Equal(t, "FJ.AGENT.agent1.EVT.INFO", got)
+	got := agent.EvtAgentInfoSubject("gateway1", "agent1")
+	require.Equal(t, "FJ.GATEWAY.gateway1.AGENT.agent1.EVT.INFO", got)
 }
