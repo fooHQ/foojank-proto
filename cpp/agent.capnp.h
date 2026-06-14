@@ -49,14 +49,14 @@ static constexpr  ::int64_t EXIT_SUCCESS = 0ll;
 static constexpr  ::int64_t EXIT_FAILURE = 1ll;
 static constexpr  ::int64_t EXIT_COMMAND_NOT_FOUND = 127ll;
 static constexpr  ::int64_t EXIT_INTERRUPTED = 130ll;
-extern const ::capnp::_::ConstText<31> CMD_START_WORKER_T;
-extern const ::capnp::_::ConstText<30> CMD_STOP_WORKER_T;
-extern const ::capnp::_::ConstText<31> CMD_WRITE_STDIN_T;
-extern const ::capnp::_::ConstText<31> EVT_START_WORKER_T;
-extern const ::capnp::_::ConstText<30> EVT_STOP_WORKER_T;
-extern const ::capnp::_::ConstText<32> EVT_WORKER_STATUS_T;
-extern const ::capnp::_::ConstText<32> EVT_WORKER_STDOUT_T;
-extern const ::capnp::_::ConstText<20> EVT_AGENT_INFO_T;
+extern const ::capnp::_::ConstText<42> CMD_START_WORKER_T;
+extern const ::capnp::_::ConstText<41> CMD_STOP_WORKER_T;
+extern const ::capnp::_::ConstText<42> CMD_WRITE_STDIN_T;
+extern const ::capnp::_::ConstText<42> EVT_START_WORKER_T;
+extern const ::capnp::_::ConstText<41> EVT_STOP_WORKER_T;
+extern const ::capnp::_::ConstText<43> EVT_WORKER_STATUS_T;
+extern const ::capnp::_::ConstText<43> EVT_WORKER_STDOUT_T;
+extern const ::capnp::_::ConstText<31> EVT_AGENT_INFO_T;
 struct StartWorkerRequest {
   StartWorkerRequest() = delete;
 
