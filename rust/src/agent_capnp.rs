@@ -6,14 +6,14 @@ pub const EXIT_SUCCESS: i64 = 0;
 pub const EXIT_FAILURE: i64 = 1;
 pub const EXIT_COMMAND_NOT_FOUND: i64 = 127;
 pub const EXIT_INTERRUPTED: i64 = 130;
-pub const CMD_START_WORKER_T: &str = "FJ.AGENT.%s.CMD.WORKER.%s.START";
-pub const CMD_STOP_WORKER_T: &str = "FJ.AGENT.%s.CMD.WORKER.%s.STOP";
-pub const CMD_WRITE_STDIN_T: &str = "FJ.AGENT.%s.CMD.WORKER.%s.STDIN";
-pub const EVT_START_WORKER_T: &str = "FJ.AGENT.%s.EVT.WORKER.%s.START";
-pub const EVT_STOP_WORKER_T: &str = "FJ.AGENT.%s.EVT.WORKER.%s.STOP";
-pub const EVT_WORKER_STATUS_T: &str = "FJ.AGENT.%s.EVT.WORKER.%s.STATUS";
-pub const EVT_WORKER_STDOUT_T: &str = "FJ.AGENT.%s.EVT.WORKER.%s.STDOUT";
-pub const EVT_AGENT_INFO_T: &str = "FJ.AGENT.%s.EVT.INFO";
+pub const CMD_START_WORKER_T: &str = "FJ.GATEWAY.%s.AGENT.%s.CMD.WORKER.%s.START";
+pub const CMD_STOP_WORKER_T: &str = "FJ.GATEWAY.%s.AGENT.%s.CMD.WORKER.%s.STOP";
+pub const CMD_WRITE_STDIN_T: &str = "FJ.GATEWAY.%s.AGENT.%s.CMD.WORKER.%s.STDIN";
+pub const EVT_START_WORKER_T: &str = "FJ.GATEWAY.%s.AGENT.%s.EVT.WORKER.%s.START";
+pub const EVT_STOP_WORKER_T: &str = "FJ.GATEWAY.%s.AGENT.%s.EVT.WORKER.%s.STOP";
+pub const EVT_WORKER_STATUS_T: &str = "FJ.GATEWAY.%s.AGENT.%s.EVT.WORKER.%s.STATUS";
+pub const EVT_WORKER_STDOUT_T: &str = "FJ.GATEWAY.%s.AGENT.%s.EVT.WORKER.%s.STDOUT";
+pub const EVT_AGENT_INFO_T: &str = "FJ.GATEWAY.%s.AGENT.%s.EVT.INFO";
 
 pub mod start_worker_request {
   #[derive(Copy, Clone)]
@@ -220,7 +220,7 @@ pub mod start_worker_request {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(3, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(111, 9, 0, 0, 129, 10, 0, 0),
+      ::capnp::word(64, 10, 0, 0, 82, 11, 0, 0),
       ::capnp::word(21, 0, 0, 0, 250, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -469,7 +469,7 @@ pub mod start_worker_response {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(1, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(210, 10, 0, 0, 114, 11, 0, 0),
+      ::capnp::word(163, 11, 0, 0, 67, 12, 0, 0),
       ::capnp::word(21, 0, 0, 0, 2, 1, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -654,7 +654,7 @@ pub mod stop_worker_request {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(0, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(202, 11, 0, 0, 229, 11, 0, 0),
+      ::capnp::word(155, 12, 0, 0, 182, 12, 0, 0),
       ::capnp::word(21, 0, 0, 0, 242, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -844,7 +844,7 @@ pub mod stop_worker_response {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(1, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(52, 12, 0, 0, 210, 12, 0, 0),
+      ::capnp::word(5, 13, 0, 0, 163, 13, 0, 0),
       ::capnp::word(21, 0, 0, 0, 250, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -1065,7 +1065,7 @@ pub mod update_worker_status {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(1, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(48, 13, 0, 0, 45, 14, 0, 0),
+      ::capnp::word(1, 14, 0, 0, 254, 14, 0, 0),
       ::capnp::word(21, 0, 0, 0, 250, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -1290,7 +1290,7 @@ pub mod update_worker_stdio {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(1, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(159, 14, 0, 0, 234, 14, 0, 0),
+      ::capnp::word(112, 15, 0, 0, 187, 15, 0, 0),
       ::capnp::word(21, 0, 0, 0, 242, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -1571,7 +1571,7 @@ pub mod update_client_info {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(4, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(51, 15, 0, 0, 167, 16, 0, 0),
+      ::capnp::word(4, 16, 0, 0, 120, 17, 0, 0),
       ::capnp::word(21, 0, 0, 0, 234, 0, 0, 0),
       ::capnp::word(33, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -1823,7 +1823,7 @@ pub mod message {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(1, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(221, 16, 0, 0, 105, 18, 0, 0),
+      ::capnp::word(174, 17, 0, 0, 58, 19, 0, 0),
       ::capnp::word(21, 0, 0, 0, 162, 0, 0, 0),
       ::capnp::word(29, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
@@ -2580,7 +2580,7 @@ pub mod envelope {
       ::capnp::word(112, 139, 170, 54, 93, 170, 204, 220),
       ::capnp::word(2, 0, 7, 0, 0, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
-      ::capnp::word(170, 18, 0, 0, 236, 18, 0, 0),
+      ::capnp::word(123, 19, 0, 0, 189, 19, 0, 0),
       ::capnp::word(21, 0, 0, 0, 170, 0, 0, 0),
       ::capnp::word(29, 0, 0, 0, 7, 0, 0, 0),
       ::capnp::word(0, 0, 0, 0, 0, 0, 0, 0),
