@@ -7,6 +7,7 @@ import (
 	capnplib "capnproto.org/go/capnp/v3"
 
 	capnp "github.com/foohq/foojank-proto/go/agent/capnp"
+	"github.com/foohq/foojank-proto/go/utils"
 )
 
 var (
@@ -115,63 +116,42 @@ func Unmarshal(b []byte) (Envelope, error) {
 
 // CmdStartWorkerSubject returns the NATS subject for sending a start worker command to an agent.
 func CmdStartWorkerSubject(gatewayID, agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.CmdStartWorkerT, gatewayID, agentID, workerID)
+	return utils.FormatString(capnp.CmdStartWorkerT, gatewayID, agentID, workerID)
 }
 
 // CmdStopWorkerSubject returns the NATS subject for sending a stop worker command to an agent.
 func CmdStopWorkerSubject(gatewayID, agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.CmdStopWorkerT, gatewayID, agentID, workerID)
+	return utils.FormatString(capnp.CmdStopWorkerT, gatewayID, agentID, workerID)
 }
 
 // CmdWriteStdinSubject returns the NATS subject for sending stdin to a worker via an agent.
 func CmdWriteStdinSubject(gatewayID, agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.CmdWriteStdinT, gatewayID, agentID, workerID)
+	return utils.FormatString(capnp.CmdWriteStdinT, gatewayID, agentID, workerID)
 }
 
 // EvtStartWorkerSubject returns the NATS subject for a worker start event.
 func EvtStartWorkerSubject(gatewayID, agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.EvtStartWorkerT, gatewayID, agentID, workerID)
+	return utils.FormatString(capnp.EvtStartWorkerT, gatewayID, agentID, workerID)
 }
 
 // EvtStopWorkerSubject returns the NATS subject for a worker stop event.
 func EvtStopWorkerSubject(gatewayID, agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.EvtStopWorkerT, gatewayID, agentID, workerID)
+	return utils.FormatString(capnp.EvtStopWorkerT, gatewayID, agentID, workerID)
 }
 
 // EvtWorkerStatusSubject returns the NATS subject for a worker status event.
 func EvtWorkerStatusSubject(gatewayID, agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.EvtWorkerStatusT, gatewayID, agentID, workerID)
+	return utils.FormatString(capnp.EvtWorkerStatusT, gatewayID, agentID, workerID)
 }
 
 // EvtWorkerStdoutSubject returns the NATS subject for a worker stdout event.
 func EvtWorkerStdoutSubject(gatewayID, agentID, workerID string) string {
-	return replaceStringPlaceholders(capnp.EvtWorkerStdoutT, gatewayID, agentID, workerID)
+	return utils.FormatString(capnp.EvtWorkerStdoutT, gatewayID, agentID, workerID)
 }
 
 // EvtAgentInfoSubject returns the NATS subject for an agent info event.
 func EvtAgentInfoSubject(gatewayID, agentID string) string {
-	return replaceStringPlaceholders(capnp.EvtAgentInfoT, gatewayID, agentID)
-}
-
-func replaceStringPlaceholders(s string, values ...string) string {
-	result := s
-	valIndex := 0
-
-	for valIndex < len(values) {
-		found := false
-		for i := 0; i < len(result)-1; i++ {
-			if result[i] == '%' && result[i+1] == 's' {
-				result = result[:i] + values[valIndex] + result[i+2:]
-				valIndex++
-				found = true
-				break
-			}
-		}
-		if !found {
-			break
-		}
-	}
-	return result
+	return utils.FormatString(capnp.EvtAgentInfoT, gatewayID, agentID)
 }
 
 func newEnvelope() (capnp.Envelope, error) {
