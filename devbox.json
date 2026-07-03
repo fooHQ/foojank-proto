@@ -25,6 +25,9 @@
       ],
       "test": [
         "./devbox.sh test"
+      ],
+      "lint": [
+        "./devbox.sh lint"
       ]
     }
   }

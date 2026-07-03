@@ -62,4 +62,12 @@ test_go() {
     go -C ./go test ./...
 }
 
+lint() {
+    lint_go
+}
+
+lint_go() {
+    (cd ./go && golangci-lint run --timeout 10m)
+}
+
 eval $@
