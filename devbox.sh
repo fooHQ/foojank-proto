@@ -54,4 +54,12 @@ build_schema_cpp() {
     capnp compile --src-prefix schema -I ./build/go-capnp/std/ -I "$DEVBOX_INCLUDE" -o c++:"$output_dir" "$1"
 }
 
+test() {
+    test_go
+}
+
+test_go() {
+    go -C ./go test ./...
+}
+
 eval $@
