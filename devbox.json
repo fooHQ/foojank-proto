@@ -4,7 +4,8 @@
     "capnproto@latest",
     "capnproto-java@latest",
     "capnproto-rust@latest",
-    "go@1.25"
+    "go@1.26",
+    "golangci-lint@2.11"
   ],
   "env": {
     "GOROOT":      "",
